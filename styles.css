@@ -8,4 +8,20 @@
     height: 100vh;
 
     background-color: black;
+
+    overflow: hidden;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.tc{
+    border: white solid 1px;
+}
+
+.bgc{
+    height: 40vh;
+    width: 40vw;
+    background-color: grey;
 }
