@@ -3,75 +3,94 @@ import * as TinderCard from 'react-tinder-card';
 import { useState } from 'react';
 
 const Home: React.FC = () => {
-
-    const exArray = ['111', '222', '333', '444', '555']
-    const [num, setNum] = useState(0)
-
     const onSwipe = (direction) => {
         console.log('You swiped: ' + direction)
     }
 
-    const onCardLeftScreen = (myIdentifier) => {
-        console.log(myIdentifier + ' left the screen')
-        setNum(num => num + 1)
-        let tc2: HTMLElement = document.querySelector('#card2')
-        tc2.style.display = "inline";
-    }
+    const exArray = ['111', '222', '333', '444', '555']
+    const [num, setNum] = useState(1)
 
-    const onCardLeftScreenT = (myIdentifier) => {
-        console.log(myIdentifier + ' left the screen')
-        setNum(num => num + 1)
-        let tc3: HTMLElement = document.querySelector('#card3')
-        tc3.style.display = "inline";
-    }
 
+    function onCardLeftScreen(myIdentifier){
+        console.log(myIdentifier + ' left the screen') 
+
+        let firstEle = document.getElementById(`${num}`.toString())
+        firstEle.style.display="none"
+
+        console.log(num)
+        AddOne()
+        console.log(num)
+
+        let secondEle = document.getElementById(`${num}`.toString())
+        secondEle.style.display="inline";
+    }
+    function AddOne(){
+        setNum(num => num + 1)
+        let secondEle = document.getElementById(`${num}`.toString())
+        secondEle.style.display = "inline";
+        console.log(num)
+    }
 
     return(
     <>
         <div className='bgc'>
-            
         </div>
 
-        <div className='tc'>
+        <div className='tc'
+        id='1'>
         <TinderCard 
-         onSwipe={onSwipe} 
-         onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
-         preventSwipe={['up', 'down']}>
-             <div>
+        style={{display:'block'}}
+        onSwipe={onSwipe} 
+        onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
+        preventSwipe={['up', 'down']}>
+            <div>
                 {exArray[`${num}`]}
-             </div>
-             <h1 style={{display:'none'}}className='lol'>LOL</h1>
+            </div>
+            <h1 style={{display:'none'}}className='lol'>LOLk</h1>
         </TinderCard>
         </div>
 
         <div className='tc'
-        id='card2'
+        id='2'
         style={{display:'none'}}>
             <TinderCard 
             onSwipe={onSwipe} 
-            onCardLeftScreen={() => onCardLeftScreenT('fooBar')} 
+            onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
             preventSwipe={['up', 'down']}>
                 <div>
                     {exArray[`${num}`]}
                 </div>
-                <h1>LOL</h1>
+                <h1>LOLo</h1>
             </TinderCard>
         </div>
 
         <div className='tc'
-        id='card2'
+        id='3'
         style={{display:'none'}}>
             <TinderCard 
             onSwipe={onSwipe} 
-            onCardLeftScreen={() => onCardLeftScreenT('fooBar')} 
+            onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
             preventSwipe={['up', 'down']}>
                 <div>
                     {exArray[`${num}`]}
                 </div>
-                <h1>LOL</h1>
+                <h1>LOLl</h1>
             </TinderCard>
         </div>
 
+        <div className='tc'
+        id='4'
+        style={{display:'none'}}>
+            <TinderCard 
+            onSwipe={onSwipe} 
+            onCardLeftScreen={() => onCardLeftScreen('fooBar')} 
+            preventSwipe={['up', 'down']}>
+                <div>
+                    {exArray[`${num}`]}
+                </div>
+                <h1>LOLllll</h1>
+            </TinderCard>
+        </div>
     </>
     )
 }
