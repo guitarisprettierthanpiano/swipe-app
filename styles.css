@@ -1,6 +1,7 @@
 *{
     margin: 0px;
     padding: 0px;
+    font-size: 24px;
     color: white;
 }
 #root{
@@ -9,9 +10,14 @@
 
     background-color: rgb(15, 15, 15);
 
-    overflow: hidden;
-
     display: grid;
     align-items: center;
     justify-items: center;
+}
+ul{
+    display:inline;
+    text-decoration: none;
+}
+input{
+    color: black;
 }
