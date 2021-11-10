@@ -15,13 +15,3 @@
     align-items: center;
     justify-items: center;
 }
-
-.tc{
-    border: white solid 1px;
-}
-
-.bgc{
-    height: 40vh;
-    width: 40vw;
-    background-color: grey;
-}
