@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-import Nav from './components/nav';
+import Navigation from './components/nav';
 import Daily from './components/daily'
 import Hourly from './components/hourly'
 import Today from './components/today'
@@ -63,8 +63,11 @@ const App: React.FC = () => {
 
     return(
     <>
+    <Navigation
+    name='sclepper'
+    age={22} />
+    
     <div className='home-container'>
-        <Nav/>
 
         <h1>{searchedCity}</h1>
         <h1>lat = {lattitude}</h1>

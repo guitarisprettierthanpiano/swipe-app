@@ -1,8 +1,12 @@
 *{
     margin: 0px;
     padding: 0px;
+
     font-size: 24px;
     color: white;
+
+    align-self: center;
+    justify-self: center;
 }
 #root{
     width: 100vw;
@@ -11,13 +15,50 @@
     background-color: rgb(15, 15, 15);
 
     display: grid;
-    align-items: center;
-    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10vh 90vh;
+}
+
+/*NAV*/
+nav{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid white;
+
+    padding: 1px;
+    width: calc(100vw - 10px);
+    height: 100%;
 }
 ul{
-    display:inline;
-    text-decoration: none;
+    list-style-type: none;
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+
+    width: 100%;
+}
+li{
+    display: inline;
 }
 input{
     color: black;
+}
+
+/*TODAY*/
+.today-container{
+    height: 90vh;
+    width: 100%;
+}
+
+/*HOURLY*/
+.hourly-container{
+    height: 90vh;    
+    width: 100%;
+}
+
+/*DAILY*/
+.daily-container{
+    height: 90vh;
+    width: 100%;
 }
