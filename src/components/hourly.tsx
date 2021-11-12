@@ -1,12 +1,15 @@
 import * as React from 'react';
 
-const Hourly: React.FC = () => {
+interface Props{
+    hourlyData: Array<24>;
+}
+
+const Hourly: React.FC<Props> = (props) => {
+
     return(
-    <>
     <div className='hourly-container'>
-        
+        <h1>HOURLY {props.hourlyData[5]}</h1>
     </div>
-    </>
     )
 }
 

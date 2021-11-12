@@ -1,36 +1,36 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { NavLink } from 'react-router-dom'
 
 interface Props{
     name: string;
     age: number;
 }
 
-const Nav: React.FC<Props> = (props) => {
+const Navigation: React.FC<Props> = (props) => {
     let testtt = props.name
 
     return(
-        <>
-        <nav>
-
-            <ul>
+    <nav>
+        <ul>
+            <NavLink
+            exact activeClassname='active' to='/'>
                 <li>Today</li>
+            </NavLink>
+
+            <NavLink
+            activeClassname='active' to='/hourly'>
                 <li>Hourly</li>
+            </NavLink>
+
+            <NavLink
+            activeClassname='active' to='/daily'>
                 <li>Daily</li>
-                <li>Radar{testtt}</li>
-            </ul>
+            </NavLink>
 
-            <input
-            type='text'
-            placeholder='Seach'
-            //onChange={event => setCityName(event.target.value)}
-            //value={cityName}
-            //onKeyPress={SearchCity}
-            />
-
-        </nav>
-        </>
+            <li>Radar{testtt}</li>
+        </ul>
+    </nav>
     )
 }
 
-export default Nav;
+export default Navigation;

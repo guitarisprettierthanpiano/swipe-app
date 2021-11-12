@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { Route, Switch, HashRouter } from 'react-router-dom'
 
 import Navigation from './components/nav';
 import Daily from './components/daily'
@@ -8,7 +9,7 @@ import Today from './components/today'
 
 const App: React.FC = () => {
     //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
-    const [cityName, setCityName] = useState('')
+    const [cityName, setCityName] = useState('Raleigh')
     const [searchedCity, setSearchedCity] = useState('')
     const [temp, setTemp] = useState<Number>()
     const [lattitude, setLattitude] = useState<Number>()
@@ -34,16 +35,24 @@ const App: React.FC = () => {
                     .then(result => result.json())
                     .then(result => {
                         console.log(result)
+
                         let dailyArray = []
                         for (let i=0; i<8; i++){
                             dailyArray.push(result.daily[i].temp.max)
                         }
 
-                        //inside a return so all returns at the same time
+                        let hourlyArray = []
+                        for (let j=0; j<23; j++){
+                            hourlyArray.push(result.hourly[j].temp)
+                        }
+                        console.log(hourlyArray)
+
+                        //inside a return so each state updates at the same time 
                         return (
                             setLattitude(lat),
                             setLongitude(lon),
                             setTemp(result.current.temp),
+                            setHourlyTemps(hourlyArray),
                             setDailyTemps(dailyArray)
                         )
                     })
@@ -52,8 +61,8 @@ const App: React.FC = () => {
     }
 
     useEffect(() => {
-        setCityName('Raleigh')
-    },[])
+        ApiSearch(); 
+    }, [])
 
     const SearchCity = event => {
         if (event.key === 'Enter') {
@@ -63,19 +72,43 @@ const App: React.FC = () => {
 
     return(
     <>
-    <Navigation
-    name='sclepper'
-    age={22} />
-    
-    <div className='home-container'>
 
-        <h1>{searchedCity}</h1>
-        <h1>lat = {lattitude}</h1>
-        <h1>lon = {longitude}</h1>
-        <h3>temp = {temp}</h3>
-        <h3>daily max = {dailyTemps}</h3>
+    <HashRouter>
+        <Navigation
+        name={cityName}
+        age={22} />
 
-    </div>
+        <input
+        type='text'
+        onChange={event => setCityName(event.target.value)}
+        value={cityName}
+        onKeyPress={SearchCity}
+        />
+        
+        <div className='body-container'>
+
+            <Switch>
+                <Route exact path='/'
+                render = {props => <Today {...props} todayData={temp}/>}/>
+
+                <Route path='/hourly'
+                render = {props => <Hourly {...props} hourlyData={hourlyTemps}/>}
+                />
+
+                <Route path='/daily'
+                render = {props => <Daily {...props} dailyData={dailyTemps}/>}
+                //component = {Daily}
+                />
+            </Switch>
+
+            <h1>{searchedCity}</h1>
+            <h1>lat = {lattitude}</h1>
+            <h1>lon = {longitude}</h1>
+            <h3>temp = {temp}</h3>
+            <h3>daily max = {dailyTemps}</h3>
+
+        </div>
+    </HashRouter>
     </>
     )
 }

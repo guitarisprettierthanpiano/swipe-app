@@ -1,12 +1,15 @@
 import * as React from 'react';
 
-const Today: React.FC = () => {
+interface Props{
+    todayData: number;
+}
+
+const Today: React.FC<Props> = (props) => {
+
     return(
-    <>
     <div className='today-container'>
-        
+        <h1>Today{props.todayData}</h1>
     </div>
-    </>
     )
 }
 
