@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Route, Switch, HashRouter } from 'react-router-dom'
+import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import Navigation from './components/nav';
 import Daily from './components/daily'
@@ -9,13 +9,26 @@ import Today from './components/today'
 
 const App: React.FC = () => {
     //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
-    const [allData, setAllData] = useState({})
-    const [cityName, setCityName] = useState('Raleigh')
+    const [cityName, setCityName] = useState('Chicago')
     const [searchedCity, setSearchedCity] = useState('')
+
+    //props sent to Today component
     const [temp, setTemp] = useState<Number>()
+    const [feelsLike, setFeelsLike] = useState<Number>()
+    const [description, setDescription] = useState('')
+    const [humidity, setHumidity] = useState<Number>()
+    const [windSpeed, setWindSpeed] = useState<Number>()
+    const [windDeg, setWindDeg] = useState<Number>()
+    const [windGust, setWindGust] = useState<Number>()
+    
     const [lattitude, setLattitude] = useState<Number>()
     const [longitude, setLongitude] = useState<Number>()
+
+    //props sent to Hourly component
     const [hourlyTemps, setHourlyTemps] = useState([])
+    const [hourlyHours, setHourlyHours] = useState([])
+
+    //props send to Daily component
     const [dailyTemps, setDailyTemps] = useState([])
 
     const APIkey = '49cc8c821cd2aff9af04c9f98c36eb74'
@@ -27,7 +40,6 @@ const App: React.FC = () => {
         const FetchCoords = await fetch(urlCoords)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 let lat:Number = res.coord.lat
                 let lon:Number = res.coord.lon
 
@@ -37,35 +49,51 @@ const App: React.FC = () => {
                     .then(result => {
                         console.log(result)
 
-                        let dailyArray = []
+                        //puts eight daily temps in an array
+                        let daily_array = []
                         for (let i=0; i<8; i++){
-                            dailyArray.push(result.daily[i].temp.max)
+                            daily_array.push(result.daily[i].temp.max)
                         }
 
-                        let hourlyArray = []
+                        //puts 24 hourly temps and hours in arrays
+                        let hourly_temps_array = []
+                        let hourly_hours_array = []
                         for (let j=0; j<23; j++){
-                            hourlyArray.push(result.hourly[j].temp)
+                            hourly_temps_array.push(result.hourly[j].temp)
+
+                            let exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(result.hourly[j].dt * 1000)
+                            hourly_hours_array.push(exact_hour)
                         }
-                        console.log(hourlyArray)
 
                         //inside a return so each state updates at the same time 
                         return (
-                            setAllData(result),
                             setLattitude(lat),
                             setLongitude(lon),
+
                             setTemp(result.current.temp),
-                            setHourlyTemps(hourlyArray),
-                            setDailyTemps(dailyArray)
+                            setFeelsLike(result.current.feels_like),
+                            setDescription(result.current.weather[0].description),
+                            setHumidity(res.main.humidity),
+                            setWindSpeed(res.wind.speed),
+                            setWindDeg(res.wind.deg),
+                            setWindGust(res.wind.gust),
+
+                            setHourlyTemps(hourly_temps_array),
+                            setHourlyHours(hourly_hours_array),
+
+                            setDailyTemps(daily_array)
                         )
                     })
             
             })
     }
 
+    //fetches raleigh on page load, so page doesn't look barren
     useEffect(() => {
         ApiSearch(); 
     }, [])
 
+    //only fetch if enter key is pressed
     const SearchCity = event => {
         if (event.key === 'Enter') {
             ApiSearch();
@@ -73,8 +101,6 @@ const App: React.FC = () => {
     }
 
     return(
-    <>
-
     <HashRouter>
         <Navigation
         name={cityName}
@@ -91,10 +117,19 @@ const App: React.FC = () => {
 
             <Switch>
                 <Route exact path='/'
-                render = {props => <Today {...props} temp={temp}/>}/>
+                render = {props => 
+                <Today {...props} temperature={temp} 
+                temp_feels_like={feelsLike}
+                description={description}
+                humidity={humidity}
+                wind_speed={windSpeed}
+                wind_degrees={windDeg}
+                wind_gust={windGust}/>}/>
 
                 <Route path='/hourly'
-                render = {props => <Hourly {...props} hourlyData={hourlyTemps}/>}
+                render = {props => 
+                <Hourly {...props} hourly_temps={hourlyTemps}
+                hourly_hours={hourlyHours}/>} 
                 />
 
                 <Route path='/daily'
@@ -111,7 +146,6 @@ const App: React.FC = () => {
 
         </div>
     </HashRouter>
-    </>
     )
 }
 

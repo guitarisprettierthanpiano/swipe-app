@@ -1,7 +1,14 @@
 import * as React from 'react';
 
 interface Props{
-    temp: number;
+    temperature: number;
+    temp_feels_like: number;
+    description: string;
+
+    humidity: number;
+    wind_speed: number;
+    wind_degrees: number;
+    wind_gust: number;
 }
 
 const Today: React.FC<Props> = (props) => {
@@ -9,23 +16,27 @@ const Today: React.FC<Props> = (props) => {
 
     return(
     <div className='today-container'>
+
         <div className='today-left'>
             <span id='current-weather'>Current Weather</span>
-            <span id='time'>12:00 AM</span>
+            <span id='time'>
+                {Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit'}).format(Date.now())}
+            </span>
             <img id='weather-img' src='../img/test.png'></img>
-            <span id='temp'>{props.temp}</span>
-            <span id='real-feel'>Real Feel 46</span>
-            <span id='overcast'>Clear</span>
+            <span id='temp'>{props.temperature}°</span>
+            <span id='real-feel'>Feels Like {props.temp_feels_like}°</span>
+            <span id='overcast'>{props.description}</span>
         </div> 
 
         <div className='today-right'>
-            <span id='air-quality'>Air Quality</span>
-            <span id='air-quality-data'>Fair</span>
+            <span id='air-quality'>Humidity</span>
+            <span id='air-quality-data'>{props.humidity}</span>
             <span id='wind'>Wind</span>
-            <span id='wind-data'>WSW 2 mph</span>
+            <span id='wind-data'>DIRECTION {props.wind_speed} mph</span>
             <span id='wind-gusts'>Wind Gusts</span>
-            <span id='wind-gusts-data'>5 mph</span>
+            <span id='wind-gusts-data'>{props.wind_gust} mph</span>
         </div>
+
     </div>
     )
 }

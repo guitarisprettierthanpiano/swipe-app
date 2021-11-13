@@ -90,8 +90,8 @@ input{
     grid-row: 3 / span 5;
     grid-column: 1;
 
-    height: 1fr;
-    width: 20%;
+    height: 10px;
+    width: 10px;
 }
 #temp{
     grid-row: 3 / span 4;
