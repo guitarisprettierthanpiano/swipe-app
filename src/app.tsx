@@ -9,6 +9,7 @@ import Today from './components/today'
 
 const App: React.FC = () => {
     //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
+    const [allData, setAllData] = useState({})
     const [cityName, setCityName] = useState('Raleigh')
     const [searchedCity, setSearchedCity] = useState('')
     const [temp, setTemp] = useState<Number>()
@@ -49,6 +50,7 @@ const App: React.FC = () => {
 
                         //inside a return so each state updates at the same time 
                         return (
+                            setAllData(result),
                             setLattitude(lat),
                             setLongitude(lon),
                             setTemp(result.current.temp),
@@ -89,7 +91,7 @@ const App: React.FC = () => {
 
             <Switch>
                 <Route exact path='/'
-                render = {props => <Today {...props} todayData={temp}/>}/>
+                render = {props => <Today {...props} temp={temp}/>}/>
 
                 <Route path='/hourly'
                 render = {props => <Hourly {...props} hourlyData={hourlyTemps}/>}
