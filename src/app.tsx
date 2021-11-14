@@ -20,6 +20,7 @@ const App: React.FC = () => {
     const [windSpeed, setWindSpeed] = useState<Number>()
     const [windDeg, setWindDeg] = useState<Number>()
     const [windGust, setWindGust] = useState<Number>()
+    const [todayIcon, setTodayIcon] = useState('10d')
     
     const [lattitude, setLattitude] = useState<Number>()
     const [longitude, setLongitude] = useState<Number>()
@@ -27,9 +28,18 @@ const App: React.FC = () => {
     //props sent to Hourly component
     const [hourlyTemps, setHourlyTemps] = useState([])
     const [hourlyHours, setHourlyHours] = useState([])
+    const [hourlyFeels, setHourlyFeels] = useState([])
+    const [hourlyDescription, setHourlyDescription] = useState([])
+    const [hourlyIcon, setHourlyIcon] = useState([])
+    //let hourlyIconUrl = `http://openweathermap.org/img/wn/${todayIcon}@4x.png`
 
-    //props send to Daily component
-    const [dailyTemps, setDailyTemps] = useState([])
+    //props sent to Daily component
+    const [dailyMax, setDailyMax] = useState([])
+    const [dailyMin, setDailyMin] = useState([])
+    const [dailyDay, setDailyDay] = useState([])
+    const [dailyDate, setDailyDate] = useState([])
+    const [dailyDescription, setDailyDescription] = useState([])
+    const [dailyIcon, setDailyIcon] = useState([])
 
     const APIkey = '49cc8c821cd2aff9af04c9f98c36eb74'
     const units = 'imperial' //metric, imperial or standard
@@ -47,22 +57,48 @@ const App: React.FC = () => {
                 const FetchWeather = fetch(urlOneCall)
                     .then(result => result.json())
                     .then(result => {
-                        console.log(result)
 
                         //puts eight daily temps in an array
-                        let daily_array = []
+                        let daily_max_array = []
+                        let daily_min_array = []
+                        let daily_day_of_week_array = []
+                        let daily_date_array = []
+                        let daily_description_array = []
+                        let daily_icon_array = []
                         for (let i=0; i<8; i++){
-                            daily_array.push(result.daily[i].temp.max)
+                            daily_max_array.push(result.daily[i].temp.max.toFixed(0))
+
+                            daily_min_array.push(result.daily[i].temp.min.toFixed(0))
+
+                            let exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format(result.daily[i].dt * 1000);
+                            daily_day_of_week_array.push(exactday)
+
+                            let exactdate = Intl.DateTimeFormat("en-us", { month: '2-digit', day: '2-digit' }).format(result.daily[i].dt * 1000);
+                            daily_date_array.push(exactdate)
+
+                            daily_description_array.push(result.daily[i].weather[0].description)
+
+                            daily_icon_array.push(result.daily[i].weather[0].icon)
+
                         }
 
-                        //puts 24 hourly temps and hours in arrays
+                        //puts 24 hour temps and hours into arrays
                         let hourly_temps_array = []
                         let hourly_hours_array = []
-                        for (let j=0; j<23; j++){
-                            hourly_temps_array.push(result.hourly[j].temp)
+                        let hourly_feels_array = []
+                        let hourly_description_array = []
+                        let hourly_icon_array = []
+                        for (let j=0; j<24; j++){
+                            hourly_temps_array.push(result.hourly[j].temp.toFixed(0))
 
                             let exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(result.hourly[j].dt * 1000)
                             hourly_hours_array.push(exact_hour)
+
+                            hourly_feels_array.push(result.hourly[j].feels_like.toFixed(0))
+
+                            hourly_description_array.push(result.hourly[j].weather[0].description)
+
+                            hourly_icon_array.push(result.hourly[j].weather[0].icon)
                         }
 
                         //inside a return so each state updates at the same time 
@@ -70,21 +106,30 @@ const App: React.FC = () => {
                             setLattitude(lat),
                             setLongitude(lon),
 
-                            setTemp(result.current.temp),
-                            setFeelsLike(result.current.feels_like),
+                            
+                            setTemp(result.current.temp.toFixed(0)),
+                            setFeelsLike(result.current.feels_like.toFixed(0)),
                             setDescription(result.current.weather[0].description),
                             setHumidity(res.main.humidity),
-                            setWindSpeed(res.wind.speed),
-                            setWindDeg(res.wind.deg),
-                            setWindGust(res.wind.gust),
+                            setWindSpeed(res.wind.speed.toFixed(0)),
+                            setWindDeg(res.wind.deg.toFixed(0)),
+                            setWindGust(res.wind.gust.toFixed(0)),
+                            setTodayIcon(result.current.weather[0].icon),
 
                             setHourlyTemps(hourly_temps_array),
                             setHourlyHours(hourly_hours_array),
+                            setHourlyFeels(hourly_feels_array),
+                            setHourlyDescription(hourly_description_array),
+                            setHourlyIcon(hourly_icon_array),
 
-                            setDailyTemps(daily_array)
+                            setDailyMax(daily_max_array),
+                            setDailyMin(daily_min_array),
+                            setDailyDay(daily_day_of_week_array),
+                            setDailyDate(daily_date_array),
+                            setDailyDescription(daily_description_array),
+                            setDailyIcon(daily_icon_array)
                         )
                     })
-            
             })
     }
 
@@ -124,25 +169,35 @@ const App: React.FC = () => {
                 humidity={humidity}
                 wind_speed={windSpeed}
                 wind_degrees={windDeg}
-                wind_gust={windGust}/>}/>
+                wind_gust={windGust}
+                icon={todayIcon}/>}/>
 
                 <Route path='/hourly'
                 render = {props => 
                 <Hourly {...props} hourly_temps={hourlyTemps}
-                hourly_hours={hourlyHours}/>} 
+                hourly_hours={hourlyHours}
+                hourly_feels={hourlyFeels}
+                hourly_description={hourlyDescription}
+                hourly_icon={hourlyIcon}/>} 
                 />
 
                 <Route path='/daily'
-                render = {props => <Daily {...props} dailyData={dailyTemps}/>}
+                render = {props => <Daily {...props} daily_max={dailyMax}
+                daily_min={dailyMin}
+                daily_day={dailyDay}
+                daily_date={dailyDate}
+                daily_description={dailyDescription}
+                daily_icon={dailyIcon}/>}
                 //component = {Daily}
                 />
             </Switch>
 
+        <div className='delete-soon'>
             <h1>{searchedCity}</h1>
             <h1>lat = {lattitude}</h1>
             <h1>lon = {longitude}</h1>
             <h3>temp = {temp}</h3>
-            <h3>daily max = {dailyTemps}</h3>
+        </div>
 
         </div>
     </HashRouter>

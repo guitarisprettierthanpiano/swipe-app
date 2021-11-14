@@ -2,10 +2,12 @@
     margin: 0px;
     padding: 0px;
 
-    width: 100%;
+    font-family: Solis, Arial, Helvetica, sans-serif;
 
-    font-size: 24px;
+    font-size: 22px;
     color: white;
+
+    width: 100%;
 
     align-self: center;
     justify-self: center;
@@ -14,19 +16,21 @@
 #root{
     width: 100vw;
     height: 100vh;
-    background-color: rgb(15, 15, 15);
+    background-color: rgb(30, 30, 30);
 
     display: grid;
     grid-template-columns: 50vw 50vw;
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 15vh 85vh;
 }
 .body-container{
     grid-row: 2;
     grid-column: 1 / span 2;
-    background-color: rgb(7, 7, 7);
 
-    height: 90vh;
+    height: 85vh;
     width: 100vw;
+}
+.delete-soon{
+    display: none;
 }
 
 /*NAV*/
@@ -41,8 +45,9 @@ nav{
     width: 100%;
     height: 100%;
 }
-nav * ul{
+nav ul{
     list-style-type: none;
+    
     display: grid; 
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
@@ -52,6 +57,11 @@ nav * ul{
 nav * li{
     display: inline;
     cursor: pointer;
+
+    width: 100%;
+}
+nav * li:hover{
+    text-decoration: underline orange;
 }
 
 input{
@@ -64,7 +74,7 @@ input{
 
 /*TODAY*/
 .today-container{
-    height: 50%;    
+    height: 100%;    
     width: 100%;
 
     display: grid;
@@ -90,8 +100,8 @@ input{
     grid-row: 3 / span 5;
     grid-column: 1;
 
-    height: 10px;
-    width: 10px;
+    height: 240px;
+    width: 240px;
 }
 #temp{
     grid-row: 3 / span 4;
@@ -139,15 +149,75 @@ input{
 }
 
 
-
 /*HOURLY*/
 .hourly-container{
-    height: 50%;    
-    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(24, auto);
+    grid-gap: 10px;
+
+    overflow-y: scroll;
+}
+.hourly-subcontainer *{
+    text-align: center;
+    text-justify: center;
+}
+
+.hourly-subcontainer{
+    width: 90%;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    background-color: rgb(14, 14, 14);
+}
+.hourly-subcontainer img{
+    height: 100px;
+    width: 100px;
 }
 
 /*DAILY*/
 .daily-container{
-    height: 50%;    
-    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(24, auto);
+
+    overflow-y: scroll;
+}
+
+.daily-subcontainer{
+    width: 90%;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.daily-subcontainer *{
+    text-align: center;
+    text-justify: center;
+}
+
+.daily-date{
+    display: grid;
+    grid-row: 1fr 1fr;
+    grid-column: 1fr;
+}
+
+.daily-container * img{
+    height: 100px;
+    width: 100px;
+}
+
+.daily-max-min{
+    display: grid;
+    grid-row: 1fr;
+    grid-column: 1fr 1fr;
+}
+
+.daily-max{
+    font-size: 40px;
+    font-weight: 500;
 }
