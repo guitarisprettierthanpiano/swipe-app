@@ -67,12 +67,28 @@ nav * li:hover{
     text-decoration: underline orange;
 }
 
-input{
+.input-findloc{
     grid-column: 2;
     grid-row: 1;
-    color: black;
 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+input{
     width: 50%;
+    grid-row: 1;
+    grid-column: 1;
+
+    color: black;
+}
+.my-location{
+    grid-row: 1;
+    grid-column: 2;
+    width: 50%;
+}
+.my-location *{
+    color: black;
 }
 
 /*TODAY*/
@@ -156,7 +172,8 @@ input{
 /*HOURLY*/
 .hourly-container{
     height: 100%;
-        background-color: rgb(29, 29, 29);
+    background-color: rgb(29, 29, 29);
+    
 
     display: grid;
     grid-template-columns: 1fr;

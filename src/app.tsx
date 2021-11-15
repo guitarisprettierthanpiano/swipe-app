@@ -22,8 +22,9 @@ const App: React.FC = () => {
     const [windGust, setWindGust] = useState<Number>()
     const [todayIcon, setTodayIcon] = useState('10d')
     
-    const [lattitude, setLattitude] = useState<Number>()
-    const [longitude, setLongitude] = useState<Number>()
+    //lat and long
+    const [lattitude, setLattitude] = useState<Number>(28.5383)
+    const [longitude, setLongitude] = useState<Number>(-81.3792)
 
     //props sent to Hourly component
     const [hourlyTemps, setHourlyTemps] = useState([])
@@ -45,15 +46,17 @@ const App: React.FC = () => {
     const units = 'imperial' //metric, imperial or standard
     const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
 
-    async function ApiSearch(){
+    async function ApiSearchByName(){
         //i need two fetch functions. one gets the coordinates from the city entered, and the second uses those coordinates to get the weather.
         const FetchCoords = await fetch(urlCoords)
             .then(res => res.json())
             .then(res => {
                 let lat:Number = res.coord.lat
                 let lon:Number = res.coord.lon
+                setLattitude(lat)
+                setLongitude(lon)
 
-                const urlOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=minutely&appid=${APIkey}`
+                const urlOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lattitude}&lon=${longitude}&units=${units}&exclude=minutely&appid=${APIkey}`
                 const FetchWeather = fetch(urlOneCall)
                     .then(result => result.json())
                     .then(result => {
@@ -102,11 +105,10 @@ const App: React.FC = () => {
                         }
 
                         //inside a return so each state updates at the same time 
-                        return (
-                            setLattitude(lat),
-                            setLongitude(lon),
+                        return (    
 
-                            
+                            setSearchedCity(res.name),
+
                             setTemp(result.current.temp.toFixed(0)),
                             setFeelsLike(result.current.feels_like.toFixed(0)),
                             setDescription(result.current.weather[0].description),
@@ -128,6 +130,7 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array)
+                            
                         )
                     })
             })
@@ -135,15 +138,148 @@ const App: React.FC = () => {
 
     //fetches raleigh on page load, so page doesn't look barren
     useEffect(() => {
-        ApiSearch(); 
+        ApiSearchByName(); 
     }, [])
 
     //only fetch if enter key is pressed
     const SearchCity = event => {
         if (event.key === 'Enter') {
-            ApiSearch();
+            ApiSearchByName();
         }
     }
+
+
+
+
+
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+
+    function success(pos) {
+        var crd = pos.coords;
+
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+
+        setLongitude(crd.longitude)
+        setLattitude(crd.latitude)
+
+        ApiSearchByName()
+    }
+
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    function clickedit(){
+    navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+//START HERE
+    const urlCoordss = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
+
+    async function ApiSearchByCoords(){
+        //i need two fetch functions. one gets the coordinates from the city entered, and the second uses those coordinates to get the weather.
+        const FetchCoords = await fetch(urlCoordss)
+            .then(res => res.json())
+            .then(res => {
+                let lat:Number = res.coord.lat
+                let lon:Number = res.coord.lon
+                setLattitude(lat)
+                setLongitude(lon)
+
+                const urlOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lattitude}&lon=${longitude}&units=${units}&exclude=minutely&appid=${APIkey}`
+                const FetchWeather = fetch(urlOneCall)
+                    .then(result => result.json())
+                    .then(result => {
+
+                        //puts eight daily temps in an array
+                        let daily_max_array = []
+                        let daily_min_array = []
+                        let daily_day_of_week_array = []
+                        let daily_date_array = []
+                        let daily_description_array = []
+                        let daily_icon_array = []
+                        for (let i=0; i<8; i++){
+                            daily_max_array.push(result.daily[i].temp.max.toFixed(0))
+
+                            daily_min_array.push(result.daily[i].temp.min.toFixed(0))
+
+                            let exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format(result.daily[i].dt * 1000);
+                            daily_day_of_week_array.push(exactday)
+
+                            let exactdate = Intl.DateTimeFormat("en-us", { month: '2-digit', day: '2-digit' }).format(result.daily[i].dt * 1000);
+                            daily_date_array.push(exactdate)
+
+                            daily_description_array.push(result.daily[i].weather[0].description)
+
+                            daily_icon_array.push(result.daily[i].weather[0].icon)
+
+                        }
+
+                        //puts 24 hour temps and hours into arrays
+                        let hourly_temps_array = []
+                        let hourly_hours_array = []
+                        let hourly_feels_array = []
+                        let hourly_description_array = []
+                        let hourly_icon_array = []
+                        for (let j=0; j<24; j++){
+                            hourly_temps_array.push(result.hourly[j].temp.toFixed(0))
+
+                            let exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(result.hourly[j].dt * 1000)
+                            hourly_hours_array.push(exact_hour)
+
+                            hourly_feels_array.push(result.hourly[j].feels_like.toFixed(0))
+
+                            hourly_description_array.push(result.hourly[j].weather[0].description)
+
+                            hourly_icon_array.push(result.hourly[j].weather[0].icon)
+                        }
+
+                        //inside a return so each state updates at the same time 
+                        return (    
+
+                            setSearchedCity(res.name),
+
+                            setTemp(result.current.temp.toFixed(0)),
+                            setFeelsLike(result.current.feels_like.toFixed(0)),
+                            setDescription(result.current.weather[0].description),
+                            setHumidity(res.main.humidity),
+                            setWindSpeed(res.wind.speed.toFixed(0)),
+                            setWindDeg(res.wind.deg.toFixed(0)),
+                            setWindGust(res.wind.gust.toFixed(0)),
+                            setTodayIcon(result.current.weather[0].icon),
+
+                            setHourlyTemps(hourly_temps_array),
+                            setHourlyHours(hourly_hours_array),
+                            setHourlyFeels(hourly_feels_array),
+                            setHourlyDescription(hourly_description_array),
+                            setHourlyIcon(hourly_icon_array),
+
+                            setDailyMax(daily_max_array),
+                            setDailyMin(daily_min_array),
+                            setDailyDay(daily_day_of_week_array),
+                            setDailyDate(daily_date_array),
+                            setDailyDescription(daily_description_array),
+                            setDailyIcon(daily_icon_array)
+                            
+                        )
+                    })
+            })
+    }
+
+
+
+
+
+
+
 
     return(
     <HashRouter>
@@ -151,12 +287,20 @@ const App: React.FC = () => {
         name={cityName}
         age={22} />
 
-        <input
-        type='text'
-        onChange={event => setCityName(event.target.value)}
-        value={cityName}
-        onKeyPress={SearchCity}
-        />
+        <div className='input-findloc'>
+            <input
+            type='text'
+            onChange={event => setCityName(event.target.value)}
+            value={cityName}
+            onKeyPress={SearchCity}
+            />
+
+            <div className='my-location'>
+                <button id="find-me" onClick={()=>clickedit()}>Show my location</button><br />
+                <p id="status"></p>
+                <a id="map-link" target="_blank"></a>
+            </div>
+        </div>
         
         <div className='body-container'>
 
@@ -170,7 +314,8 @@ const App: React.FC = () => {
                 wind_speed={windSpeed}
                 wind_degrees={windDeg}
                 wind_gust={windGust}
-                icon={todayIcon}/>}/>
+                icon={todayIcon}
+                location={searchedCity}/>}/>
 
                 <Route path='/hourly'
                 render = {props => 

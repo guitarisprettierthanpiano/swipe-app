@@ -10,6 +10,8 @@ interface Props{
     wind_degrees: number;
     wind_gust: number;
     icon: string;
+
+    location: string;
 }
 
 const Today: React.FC<Props> = (props) => {
@@ -19,7 +21,7 @@ const Today: React.FC<Props> = (props) => {
 
         <div className='today-left'>
 
-            <span id='current-weather'>Current Weather</span>
+            <span id='current-weather'>Current Weather in {props.location}</span>
             <span id='time'>
                 {Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit'}).format(Date.now())}
             </span>
