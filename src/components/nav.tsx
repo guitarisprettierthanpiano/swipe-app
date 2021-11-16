@@ -2,12 +2,9 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom'
 
 interface Props{
-    name: string;
-    age: number;
 }
 
 const Navigation: React.FC<Props> = (props) => {
-    let testtt = props.name
 
     return(
     <nav>
@@ -27,7 +24,7 @@ const Navigation: React.FC<Props> = (props) => {
                 <li>Daily</li>
             </NavLink>
 
-            <li>Radar{testtt}</li>
+            <li>Radar</li>
         </ul>
     </nav>
     )
