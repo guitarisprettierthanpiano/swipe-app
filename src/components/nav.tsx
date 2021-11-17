@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom'
 
-interface Props{
-}
-
-const Navigation: React.FC<Props> = (props) => {
+const Navigation: React.FC = () => {
 
     return(
     <nav>

@@ -33,14 +33,12 @@ const Today: React.FC<Props> = (props) => {
         </div> 
 
         <div className='today-right'>
-
             <span id='air-quality'>Humidity</span>
             <span id='air-quality-data'>{props.humidity}</span>
             <span id='wind'>Wind</span>
             <span id='wind-data'>DIRECTION {props.wind_speed} mph</span>
             <span id='wind-gusts'>Wind Gusts</span>
             <span id='wind-gusts-data'>{props.wind_gust} mph</span>
-            
         </div>
 
     </div>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+//each prop sent is an array of 24 hours of data.
 interface Props{
     hourly_temps: Array<24>;
     hourly_hours: Array<24>;

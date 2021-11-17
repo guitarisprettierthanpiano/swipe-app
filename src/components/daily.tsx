@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+//each prop sent is an array of eight days of data.
 interface Props{
     daily_max: Array<8>;
     daily_min: Array<8>;
