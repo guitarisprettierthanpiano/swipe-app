@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
-import Navigation from './components/nav';
+import Nav from './components/nav';
 import Daily from './components/daily'
 import Hourly from './components/hourly'
 import Today from './components/today' 
 
 const App: React.FC = () => {
     //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
-    const [cityName, setCityName] = useState('Denver')
+    const [cityName, setCityName] = useState('New York')
     const [searchedCity, setSearchedCity] = useState('')
 
     //props sent to Today component
@@ -20,9 +20,10 @@ const App: React.FC = () => {
     const [windSpeed, setWindSpeed] = useState<Number>()
     const [windDeg, setWindDeg] = useState<Number>()
     const [windGust, setWindGust] = useState<Number>()
-    const [todayIcon, setTodayIcon] = useState('10d')
+    const [todayIcon, setTodayIcon] = useState('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/samsung/45/medium-small-white-circle_26ac.png')
+    const [backgroundImg, setBackgroundImg] = useState('../img/test.png')
     
-    //lat and long
+    //lat and long. used within the api fetch
     const [lattitude, setLattitude] = useState<Number>()
     const [longitude, setLongitude] = useState<Number>()
 
@@ -42,15 +43,15 @@ const App: React.FC = () => {
     const [dailyDescription, setDailyDescription] = useState([])
     const [dailyIcon, setDailyIcon] = useState([])
 
-    const [executing, setExecuting] = useState(false)
+    //this will change the state of the geolocation button once pressed. will only allow this to be used once because i only have 60 fetch requests allowed per minute. a successsful fetch uses three.
+    const [disabledBoolean, setDisabledBoolean] = useState<boolean>(false)
 
     const APIkey = '4ac53b87c2233ee8de919d51d83a4347'
     const units = 'imperial' //metric, imperial or standard
-    const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
+    // const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
 
     async function ApiSearchByName(){
-        //this is a fetch within a fetch. the first fetch gets coordinates and current weather conditions from the entered location. the second fetch gets hourly and daily weather forecast using those coordinates.
-        const FetchCoords = await fetch(urlCoords)
+        const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
             .then(res => res.json())
             .then(res => {
                 const lat:Number = res.coord.lat
@@ -75,10 +76,15 @@ const App: React.FC = () => {
                             const daily_min_temp:number = result.daily[i].temp.min.toFixed(0)
                             daily_min_array.push(daily_min_temp)
 
-                            const exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format(result.daily[i].dt * 1000);
+                            const exactday = Intl.DateTimeFormat("en-us", { 
+                                weekday: "short" })
+                            .format(result.daily[i].dt * 1000);
                             daily_day_of_week_array.push(exactday)
 
-                            const exactdate = Intl.DateTimeFormat("en-us", { month: '2-digit', day: '2-digit' }).format(result.daily[i].dt * 1000);
+                            const exactdate = Intl.DateTimeFormat("en-us", { 
+                                month: '2-digit', 
+                                day: '2-digit' })
+                            .format(result.daily[i].dt * 1000);
                             daily_date_array.push(exactdate)
 
                             daily_description_array.push(result.daily[i].weather[0].description)
@@ -96,7 +102,9 @@ const App: React.FC = () => {
                             const hourly_tempe:number = result.hourly[j].temp.toFixed(0)
                             hourly_temps_array.push(hourly_tempe)
 
-                            const exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(result.hourly[j].dt * 1000)
+                            const exact_hour = Intl.DateTimeFormat('en-US', { 
+                                hour: 'numeric' })
+                            .format(result.hourly[j].dt * 1000)
                             hourly_hours_array.push(exact_hour)
 
                             const hourly_feels_like:number = result.hourly[j].feels_like.toFixed(0)
@@ -107,13 +115,42 @@ const App: React.FC = () => {
                             hourly_icon_array.push(result.hourly[j].weather[0].icon)
                         }
 
-                        //inside a return so each state updates at the same time 
+
                         const c_temp: number = result.current.temp.toFixed(0)
                         const f_like:number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
                         const w_gust = res.wind.gust
-                        return (    
 
+                        let background_image = ''
+                        if (result.current.weather[0].icon === '11d'){
+                            background_image = '../img/tstorm.jpeg'
+                        }
+                        else if(result.current.weather[0].icon === '09d'){
+                            background_image = '../img/drizzle.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '10d') {
+                            background_image = '../img/rain.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '13d') {
+                            background_image = '../img/snow.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '50d') {
+                            background_image = '../img/atmosphere.png'
+                        }
+                        else if (result.current.weather[0].icon === '01d') {
+                            background_image = '../img/clear.png'
+                        }
+                        else if (result.current.weather[0].icon === '01n') {
+                            background_image = '../img/night.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '02d' || '03d' || '04d') {
+                            background_image = '../img/clear.png'
+                        }
+                        else if (result.current.weather[0].icon === '02n' || '03n' || '04n') {
+                            background_image = '../img/night.jpg'
+                        }
+                        //inside a return so each state updates at the same time 
+                        return (    
                             setLattitude(lat),
                             setLongitude(lon),
 
@@ -126,7 +163,8 @@ const App: React.FC = () => {
                             setWindSpeed(w_speed),
                             setWindDeg(res.wind.deg),
                             setWindGust(w_gust),
-                            setTodayIcon(result.current.weather[0].icon),
+                            setTodayIcon(`http://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
+                            setBackgroundImg(background_image),
 
                             setHourlyTemps(hourly_temps_array),
                             setHourlyHours(hourly_hours_array),
@@ -140,6 +178,8 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array)
+
+
                             
                         )
                     })
@@ -154,6 +194,7 @@ const App: React.FC = () => {
 
 
 
+    //not really sure on the ideal timeout. but i'm only allowing once per page load so it is high.
     const geolocation_options = {
         enableHighAccuracy: true,
         timeout: 9000,
@@ -165,8 +206,6 @@ const App: React.FC = () => {
         //http://api.openweathermap.org/geo/1.0/reverse?lat=35.9392747&lon=-78.6115256&limit=5&appid=3c7b2ffc55a4c134c4c6d1e73e3b0096
         const crd = pos.coords;
         console.log(crd)
-        
-        setExecuting(true)
 
         // console.log('Your current position is:');
         // console.log(`Latitude : ${crd.latitude}`);
@@ -231,7 +270,6 @@ const App: React.FC = () => {
                         hourly_icon_array.push(result.hourly[j].weather[0].icon)
                     }
 
-                    //inside a return so each state updates at the same time 
                     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${your_location}&appid=${APIkey}`)
                     .then(res=>res.json())
                     .then(res=>{
@@ -239,6 +277,37 @@ const App: React.FC = () => {
                         const f_like: number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
                         const w_gust = res.wind.gust
+
+                        //inside a return so each state updates in sync
+
+                        let background_image = ''
+                        if (result.current.weather[0].icon === '11d'){
+                            background_image = '../img/tstorm.jpeg'
+                        }
+                        else if(result.current.weather[0].icon === '09d'){
+                            background_image = '../img/drizzle.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '10d') {
+                            background_image = '../img/rain.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '13d') {
+                            background_image = '../img/snow.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '50d') {
+                            background_image = '../img/atmosphere.png'
+                        }
+                        else if (result.current.weather[0].icon === '01d') {
+                            background_image = '../img/clear.png'
+                        }
+                        else if (result.current.weather[0].icon === '01n') {
+                            background_image = '../img/night.jpg'
+                        }
+                        else if (result.current.weather[0].icon === '02d' || '03d' || '04d') {
+                            background_image = '../img/clear.png'
+                        }
+                        else if (result.current.weather[0].icon === '02n' || '03n' || '04n') {
+                            background_image = '../img/night.jpg'
+                        }
                         return(
                             setLattitude(lati),
                             setLongitude(longi),
@@ -253,7 +322,8 @@ const App: React.FC = () => {
                             setWindSpeed(w_speed),
                             setWindDeg(res.wind.deg),
                             setWindGust(w_gust),
-                            setTodayIcon(result.current.weather[0].icon),
+                            setTodayIcon(`http://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
+                            setBackgroundImg(background_image),
 
                             setHourlyTemps(hourly_temps_array),
                             setHourlyHours(hourly_hours_array),
@@ -268,39 +338,37 @@ const App: React.FC = () => {
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
 
-                            setExecuting(true)
+                            setDisabledBoolean(true)
                         )
                     })
                 })
             })
     }
 
-    
     function GeolocationError(err) {
-        // console.warn(`ERROR(${err.code}): ${err.message}`);
+        console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
     function ClickedMyLocation(){
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options);
     }
-//START HERE
 
     //only fetch if enter key is pressed
     const SearchCity = event => {
-        if (event.key === 'Enter') {
-            ApiSearchByName();
-            console.log('100yup')
+        if (event.key === 'Enter'){
+            ApiSearchByName()
         }
     }
 
-    //fetches raleigh on page load, so page doesn't look barren
+    //fetches something on page load, so page doesn't look barren
     useEffect(() => {
         ApiSearchByName();
     }, [])
 
     return(
     <HashRouter>
-        <Navigation/>
+
+        <Nav/>
 
         <div className='input-findloc'>
             <input
@@ -313,23 +381,25 @@ const App: React.FC = () => {
             />
 
             <div className='my-location'>
+
                 <button id="find-me" 
-                title='Give it a moment'
-                disabled = {executing}
-                onClick={()=>ClickedMyLocation()}>
+                title='May take a moment...'
+                disabled = {disabledBoolean}
+                onClick={() => ClickedMyLocation()}>
                     Show my location
                 </button><br />
                 <p id="status"></p>
                 <a id="map-link" target="_blank"></a>
-            </div>
-        </div>
-        
-        <div className='body-container'>
 
+            </div>
+
+        </div>
+
+        <div className='body-container'>
             <Switch>
                 <Route exact path='/'
-                render = {props => 
-                <Today {...props} temperature={temp} 
+                render = {props => <Today {...props} 
+                temperature={temp} 
                 temp_feels_like={feelsLike}
                 description={description}
                 humidity={humidity}
@@ -337,11 +407,12 @@ const App: React.FC = () => {
                 wind_degrees={windDeg}
                 wind_gust={windGust}
                 icon={todayIcon}
-                location={searchedCity}/>}/>
+                location={searchedCity}
+                background_image={backgroundImg}/>}/>
 
                 <Route path='/hourly'
-                render = {props => 
-                <Hourly {...props} hourly_temps={hourlyTemps}
+                render = {props => <Hourly {...props} 
+                hourly_temps={hourlyTemps}
                 hourly_hours={hourlyHours}
                 hourly_feels={hourlyFeels}
                 hourly_description={hourlyDescription}
@@ -349,7 +420,8 @@ const App: React.FC = () => {
                 />
 
                 <Route path='/daily'
-                render = {props => <Daily {...props} daily_max={dailyMax}
+                render = {props => <Daily {...props} 
+                daily_max={dailyMax}
                 daily_min={dailyMin}
                 daily_day={dailyDay}
                 daily_date={dailyDate}
@@ -358,15 +430,9 @@ const App: React.FC = () => {
                 //component = {Daily}
                 />
             </Switch>
-
-        <div className='delete-soon'>
-            <h1>{searchedCity}</h1>
-            <h1>lat = {lattitude}</h1>
-            <h1>lon = {longitude}</h1>
-            <h3>temp = {temp}</h3>
+            
         </div>
 
-        </div>
     </HashRouter>
     )
 }

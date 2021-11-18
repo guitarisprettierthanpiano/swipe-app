@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom'
 
-const Navigation: React.FC = () => {
+const Nav: React.FC = () => {
 
     return(
     <nav>
@@ -27,4 +27,4 @@ const Navigation: React.FC = () => {
     )
 }
 
-export default Navigation;
+export default Nav;

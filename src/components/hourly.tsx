@@ -35,7 +35,7 @@ const Hourly: React.FC<Props> = (props) => {
                 <img src={`http://openweathermap.org/img/wn/${props.hourly_icon[2]}@2x.png`}></img>
             <span>{props.hourly_temps[2]}°</span>
             <span>Feels Like {props.hourly_feels[2]}°</span>
-            <span>{props.hourly_description[2]}</span>
+            <span className='hourly-description'>{props.hourly_description[2]}</span>
         </div>
 
         <div className='hourly-subcontainer'>
