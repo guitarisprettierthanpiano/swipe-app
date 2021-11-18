@@ -42,6 +42,8 @@ const App: React.FC = () => {
     const [dailyDescription, setDailyDescription] = useState([])
     const [dailyIcon, setDailyIcon] = useState([])
 
+    const [executing, setExecuting] = useState(false)
+
     const APIkey = '4ac53b87c2233ee8de919d51d83a4347'
     const units = 'imperial' //metric, imperial or standard
     const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
@@ -163,6 +165,8 @@ const App: React.FC = () => {
         //http://api.openweathermap.org/geo/1.0/reverse?lat=35.9392747&lon=-78.6115256&limit=5&appid=3c7b2ffc55a4c134c4c6d1e73e3b0096
         const crd = pos.coords;
         console.log(crd)
+        
+        setExecuting(true)
 
         // console.log('Your current position is:');
         // console.log(`Latitude : ${crd.latitude}`);
@@ -262,7 +266,9 @@ const App: React.FC = () => {
                             setDailyDay(daily_day_of_week_array),
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
-                            setDailyIcon(daily_icon_array)
+                            setDailyIcon(daily_icon_array),
+
+                            setExecuting(true)
                         )
                     })
                 })
@@ -307,7 +313,12 @@ const App: React.FC = () => {
             />
 
             <div className='my-location'>
-                <button id="find-me" onClick={()=>ClickedMyLocation()}>Show my location</button><br />
+                <button id="find-me" 
+                title='Give it a moment'
+                disabled = {executing}
+                onClick={()=>ClickedMyLocation()}>
+                    Show my location
+                </button><br />
                 <p id="status"></p>
                 <a id="map-link" target="_blank"></a>
             </div>
