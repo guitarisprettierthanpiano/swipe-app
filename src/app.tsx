@@ -350,7 +350,7 @@ const App: React.FC = () => {
     }
 
     function ClickedMyLocation(){
-        navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options);
+        navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options)
     }
 
     //only fetch if enter key is pressed
