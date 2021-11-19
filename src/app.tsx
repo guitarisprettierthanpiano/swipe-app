@@ -13,19 +13,19 @@ const App: React.FC = () => {
     const [searchedCity, setSearchedCity] = useState('')
 
     //props sent to Today component
-    const [temp, setTemp] = useState<Number>()
-    const [feelsLike, setFeelsLike] = useState<Number>()
+    const [temp, setTemp] = useState<number>()
+    const [feelsLike, setFeelsLike] = useState<number>()
     const [description, setDescription] = useState('')
-    const [humidity, setHumidity] = useState<Number>()
-    const [windSpeed, setWindSpeed] = useState<Number>()
-    const [windDeg, setWindDeg] = useState<Number>()
-    const [windGust, setWindGust] = useState<Number>()
+    const [humidity, setHumidity] = useState<number>()
+    const [windSpeed, setWindSpeed] = useState<number>()
+    const [windDeg, setWindDeg] = useState<number>()
+    const [windGust, setWindGust] = useState<number>()
     const [todayIcon, setTodayIcon] = useState('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/samsung/45/medium-small-white-circle_26ac.png')
     const [backgroundImg, setBackgroundImg] = useState('../img/test.png')
     
     //lat and long. used within the api fetch
-    const [lattitude, setLattitude] = useState<Number>()
-    const [longitude, setLongitude] = useState<Number>()
+    const [lattitude, setLattitude] = useState<number>()
+    const [longitude, setLongitude] = useState<number>()
 
     //props sent to Hourly component
     const [hourlyTemps, setHourlyTemps] = useState([])
@@ -54,8 +54,8 @@ const App: React.FC = () => {
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
             .then(res => res.json())
             .then(res => {
-                const lat:Number = res.coord.lat
-                const lon:Number = res.coord.lon
+                const lat:number = res.coord.lat
+                const lon:number = res.coord.lon
                 setLattitude(lat)
                 setLongitude(lon)
 
@@ -121,6 +121,7 @@ const App: React.FC = () => {
                         const w_speed = res.wind.speed
                         const w_gust = res.wind.gust
 
+                        console.log(result)
                         let background_image = ''
                         if (result.current.weather[0].icon === '11d'){
                             background_image = '../img/tstorm.jpeg'
@@ -338,7 +339,7 @@ const App: React.FC = () => {
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
 
-                            setDisabledBoolean(true)
+                            setDisabledBoolean(true) 
                         )
                     })
                 })
@@ -366,51 +367,56 @@ const App: React.FC = () => {
     }, [])
 
     return(
-    <HashRouter>
+    <div className='page-container'
+    style={{
+        backgroundImage: `url(${backgroundImg})`,
+        backgroundSize: 'cover'
+    }}>
 
-        <Nav/>
-
-        <div className='input-findloc'>
+        <div className='top-container'>
             <input
-            id='input-box'
-            autoFocus
-            type='text'
-            onChange={event => setCityName(event.target.value)}
-            value={cityName}
-            onKeyPress={SearchCity}
+                id='input-box'
+                autoFocus
+                type='text'
+                onChange={event => setCityName(event.target.value)}
+                value={cityName}
+                onKeyPress={SearchCity}
             />
 
             <div className='my-location'>
 
-                <button id="find-me" 
-                title='May take a moment...'
-                disabled = {disabledBoolean}
-                onClick={() => ClickedMyLocation()}>
-                    Show my location
+                <button id="find-me"
+                    title='May take a moment...'
+                    disabled={disabledBoolean}
+                    onClick={() => ClickedMyLocation()}>
+                    My Location
                 </button><br />
                 <p id="status"></p>
                 <a id="map-link" target="_blank"></a>
-
             </div>
-
         </div>
 
-        <div className='body-container'>
-            <Switch>
-                <Route exact path='/'
-                render = {props => <Today {...props} 
-                temperature={temp} 
-                temp_feels_like={feelsLike}
-                description={description}
-                humidity={humidity}
-                wind_speed={windSpeed}
-                wind_degrees={windDeg}
-                wind_gust={windGust}
-                icon={todayIcon}
-                location={searchedCity}
-                background_image={backgroundImg}/>}/>
+        <div className='middle-container'>
+            <Today temperature={temp}
+            temp_feels_like={feelsLike}
+            description={description}
+            humidity={humidity}
+            wind_speed={windSpeed}
+            wind_degrees={windDeg}
+            wind_gust={windGust}
+            icon={todayIcon}
+            location={searchedCity}
+            background_image={backgroundImg} />
+        </div>
 
-                <Route path='/hourly'
+        <HashRouter>
+        <div className='bottom-container'>
+            <Nav />
+
+            <div className='switch-container'>
+            <Switch>
+
+                <Route exact path='/'
                 render = {props => <Hourly {...props} 
                 hourly_temps={hourlyTemps}
                 hourly_hours={hourlyHours}
@@ -430,10 +436,11 @@ const App: React.FC = () => {
                 //component = {Daily}
                 />
             </Switch>
+            </div>
             
         </div>
-
-    </HashRouter>
+        </HashRouter>
+    </div>
     )
 }
 

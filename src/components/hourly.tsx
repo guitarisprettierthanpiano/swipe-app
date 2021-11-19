@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
 //each prop sent is an array of 24 hours of data.
 interface Props{
@@ -12,7 +13,7 @@ interface Props{
 const Hourly: React.FC<Props> = (props) => {
 
     return(
-    <div className='hourly-container'>
+    <ScrollContainer className='hourly-container'>
 
         <div className='hourly-subcontainer'>
             <span>{props.hourly_hours[0]}</span>
@@ -206,7 +207,7 @@ const Hourly: React.FC<Props> = (props) => {
             <span>{props.hourly_description[23]}</span>
         </div>
 
-    </div>
+    </ScrollContainer>
     )
 }
 

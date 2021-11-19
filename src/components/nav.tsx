@@ -6,13 +6,10 @@ const Nav: React.FC = () => {
     return(
     <nav>
         <ul>
+            <li></li>
+            <li></li>
             <NavLink
             exact activeClassname='active' to='/'>
-                <li>Today</li>
-            </NavLink>
-
-            <NavLink
-            activeClassname='active' to='/hourly'>
                 <li>Hourly</li>
             </NavLink>
 
@@ -21,7 +18,8 @@ const Nav: React.FC = () => {
                 <li>Daily</li>
             </NavLink>
 
-            <li>Radar</li>
+            <li></li>
+            <li></li>
         </ul>
     </nav>
     )

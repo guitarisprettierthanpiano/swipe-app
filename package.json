@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "react-indiana-drag-scroll": "^2.1.0",
     "react-router-dom": "^5.3.0"
   },
   "devDependencies": {

@@ -18,14 +18,15 @@ interface Props{
 const Today: React.FC<Props> = (props) => {
 
     return(
-    <div className='today-container'
-    style={{backgroundImage: `url(${props.background_image})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover'}}>
+    <
+    // style={{backgroundImage: `url(${props.background_image})`,
+    //         backgroundRepeat: 'no-repeat',
+    //         backgroundSize: 'cover'}}
+    >
 
         <div className='today-left'>
             <span id='current-weather'>
-                Current Weather in {props.location}
+                {props.location}
             </span>
             <span id='time'>
                 {Intl.DateTimeFormat('en-US', { 
@@ -66,7 +67,7 @@ const Today: React.FC<Props> = (props) => {
             </span>
         </div>
 
-    </div>
+    </>
     )
 }
 

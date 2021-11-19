@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import ScrollContainer from 'react-indiana-drag-scroll'
+
 //each prop sent is an array of eight days of data.
 interface Props{
     daily_max: Array<8>;
@@ -13,7 +15,7 @@ interface Props{
 const Daily: React.FC<Props> = (props) => {
 
     return(
-    <div className='daily-container'>
+    <ScrollContainer className='daily-container'>
 
         <div className='daily-subcontainer'>
             <div className='daily-date'>
@@ -119,7 +121,7 @@ const Daily: React.FC<Props> = (props) => {
             <span className='daily-description'>{props.daily_description[7]}</span>
         </div>
 
-    </div>
+    </ScrollContainer>
     )
 }
 
