@@ -20,7 +20,7 @@ const App: React.FC = () => {
     const [windSpeed, setWindSpeed] = useState<number>()
     const [windDeg, setWindDeg] = useState<number>()
     const [windGust, setWindGust] = useState<number>()
-    const [todayIcon, setTodayIcon] = useState('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/samsung/45/medium-small-white-circle_26ac.png')
+    const [todayIcon, setTodayIcon] = useState('')
     const [backgroundImg, setBackgroundImg] = useState('../img/test.png')
     
     //lat and long. used within the api fetch
@@ -150,6 +150,9 @@ const App: React.FC = () => {
                         else if (result.current.weather[0].icon === '02n' || '03n' || '04n') {
                             background_image = '../img/night.jpg'
                         }
+                        else{
+                            
+                        }
                         //inside a return so each state updates at the same time 
                         return (    
                             setLattitude(lat),
@@ -164,7 +167,7 @@ const App: React.FC = () => {
                             setWindSpeed(w_speed),
                             setWindDeg(res.wind.deg),
                             setWindGust(w_gust),
-                            setTodayIcon(`http://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
+                            setTodayIcon(`https://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
                             setBackgroundImg(background_image),
 
                             setHourlyTemps(hourly_temps_array),
@@ -323,7 +326,7 @@ const App: React.FC = () => {
                             setWindSpeed(w_speed),
                             setWindDeg(res.wind.deg),
                             setWindGust(w_gust),
-                            setTodayIcon(`http://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
+                            setTodayIcon(`https://openweathermap.org/img/wn/${result.current.weather[0].icon}@4x.png`),
                             setBackgroundImg(background_image),
 
                             setHourlyTemps(hourly_temps_array),
@@ -363,7 +366,7 @@ const App: React.FC = () => {
 
     //fetches something on page load, so page doesn't look barren
     useEffect(() => {
-        ApiSearchByName();
+        // ApiSearchByName();
     }, [])
 
     return(

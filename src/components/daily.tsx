@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import ScrollContainer from 'react-indiana-drag-scroll'
 
@@ -14,11 +15,22 @@ interface Props{
 
 const Daily: React.FC<Props> = (props) => {
 
+    const [webkitMaskStyle, setWebkitMaskStyle] = useState('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 5%)')
+
+    //this function is called once the user drags the daily container. it removes the fade webkit style.
+    function EndScroll() {
+        return (
+            setWebkitMaskStyle('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)')
+        )
+    }
+
     return(
-    <ScrollContainer className='daily-container'>
+    <ScrollContainer onEndScroll={() => EndScroll()}
+        style={{ WebkitMask: `${webkitMaskStyle}` }}
+    className='daily-container'>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[0]}</span>
                 <span className='daily-date'>{props.daily_date[0]}</span>
             </div>
@@ -31,7 +43,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[1]}</span>
                 <span className='daily-date'>{props.daily_date[1]}</span>
             </div>
@@ -44,7 +56,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[2]}</span>
                 <span className='daily-date'>{props.daily_date[2]}</span>
             </div>
@@ -57,7 +69,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[3]}</span>
                 <span className='daily-date'>{props.daily_date[3]}</span>
             </div>
@@ -70,7 +82,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[4]}</span>
                 <span className='daily-date'>{props.daily_date[4]}</span>
             </div>
@@ -83,7 +95,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[5]}</span>
                 <span className='daily-date'>{props.daily_date[5]}</span>
             </div>
@@ -96,7 +108,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[6]}</span>
                 <span className='daily-date'>{props.daily_date[6]}</span>
             </div>
@@ -109,7 +121,7 @@ const Daily: React.FC<Props> = (props) => {
         </div>
 
         <div className='daily-subcontainer'>
-            <div className='daily-date'>
+            <div className='daily-day-date'>
                 <span className='daily-day'>{props.daily_day[7]}</span>
                 <span className='daily-date'>{props.daily_date[7]}</span>
             </div>
