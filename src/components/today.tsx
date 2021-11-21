@@ -8,7 +8,7 @@ interface Props{
     humidity: number;
     wind_speed: number;
     wind_degrees: number;
-    wind_gust: number;
+    wind_gust: string;
     icon: string;
 
     location: string;
@@ -68,7 +68,7 @@ const Today: React.FC<Props> = (props) => {
                     Wind Gusts
                     </span>
                 <span id='wind-gusts-data'>
-                    {props.wind_gust} mph
+                    {props.wind_gust}
                 </span>
             </div>
         </div>

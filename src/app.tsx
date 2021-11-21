@@ -9,7 +9,7 @@ import Today from './components/today'
 
 const App: React.FC = () => {
     //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
-    const [cityName, setCityName] = useState('New York')
+    const [cityName, setCityName] = useState('Washington DC')
     const [searchedCity, setSearchedCity] = useState('')
 
     //props sent to Today component
@@ -19,9 +19,9 @@ const App: React.FC = () => {
     const [humidity, setHumidity] = useState<number>()
     const [windSpeed, setWindSpeed] = useState<number>(0.00)
     const [windDeg, setWindDeg] = useState<number>(0.00)
-    const [windGust, setWindGust] = useState<number>(0.00)
+    const [windGust, setWindGust] = useState('None')
     const [todayIcon, setTodayIcon] = useState('')
-    const [backgroundImg, setBackgroundImg] = useState('./././clearD.jpg')
+    const [backgroundImg, setBackgroundImg] = useState('./././img/clearD.jpg')
     const [timezoneOffset, setTimezoneOffset] = useState<number>(0)
 
     //props sent to Hourly component
@@ -40,9 +40,9 @@ const App: React.FC = () => {
     const [dailyDescription, setDailyDescription] = useState([])
     const [dailyIcon, setDailyIcon] = useState([])
 
-    const APIkey = '4ac53b87c2233ee8de919d51d83a4347'
+    const APIkey = process.env.REACT_APP_API_KEY
+    // 4ac53b87c2233ee8de919d51d83a4347
     const units = 'imperial' //metric, imperial or standard
-    // const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
 
     async function ApiSearchByName(){
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
@@ -112,10 +112,14 @@ const App: React.FC = () => {
                         const f_like:number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
 
-                        //tend to get undefined returned from the api when wind is low or zero. manually setting 0 if it is the case
-                        let w_gust = res.wind.gust
-                        if (w_gust===undefined){
-                            w_gust = 0
+                        //tend to get undefined returned from the api when wind is low or zero. manually se+tting None if it is the case
+                        const w_gust_int = res.wind.gust
+                        let w_gust = ''
+                        if (w_gust_int===undefined){
+                            w_gust = 'None'
+                        }
+                        else{
+                            w_gust = res.wind.gust.toString() + ' mph'
                         }
 
                         let background_image = ''
@@ -284,9 +288,14 @@ const App: React.FC = () => {
                         const c_temp: number = result.current.temp.toFixed(0)
                         const f_like: number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
-                        let w_gust = res.wind.gust
-                        if (w_gust===undefined){
-                            w_gust = 0
+
+                        const w_gust_int = res.wind.gust
+                        let w_gust = ''
+                        if (w_gust_int === undefined) {
+                            w_gust = 'None'
+                        }
+                        else {
+                            w_gust = res.wind.gust.toString() + ' mph'
                         }
 
                         let background_image = ''
