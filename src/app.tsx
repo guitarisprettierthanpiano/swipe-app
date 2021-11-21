@@ -17,15 +17,12 @@ const App: React.FC = () => {
     const [feelsLike, setFeelsLike] = useState<number>()
     const [description, setDescription] = useState('')
     const [humidity, setHumidity] = useState<number>()
-    const [windSpeed, setWindSpeed] = useState<number>()
-    const [windDeg, setWindDeg] = useState<number>()
-    const [windGust, setWindGust] = useState<number>()
+    const [windSpeed, setWindSpeed] = useState<number>(0.00)
+    const [windDeg, setWindDeg] = useState<number>(0.00)
+    const [windGust, setWindGust] = useState<number>(0.00)
     const [todayIcon, setTodayIcon] = useState('')
-    const [backgroundImg, setBackgroundImg] = useState('../img/test.png')
-    
-    //lat and long. used within the api fetch
-    const [lattitude, setLattitude] = useState<number>()
-    const [longitude, setLongitude] = useState<number>()
+    const [backgroundImg, setBackgroundImg] = useState('./././clearD.jpg')
+    const [timezoneOffset, setTimezoneOffset] = useState<number>(0)
 
     //props sent to Hourly component
     const [hourlyTemps, setHourlyTemps] = useState([])
@@ -43,9 +40,6 @@ const App: React.FC = () => {
     const [dailyDescription, setDailyDescription] = useState([])
     const [dailyIcon, setDailyIcon] = useState([])
 
-    //this will change the state of the geolocation button once pressed. will only allow this to be used once because i only have 60 fetch requests allowed per minute. a successsful fetch uses three.
-    const [disabledBoolean, setDisabledBoolean] = useState<boolean>(false)
-
     const APIkey = '4ac53b87c2233ee8de919d51d83a4347'
     const units = 'imperial' //metric, imperial or standard
     // const urlCoords = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`
@@ -56,8 +50,6 @@ const App: React.FC = () => {
             .then(res => {
                 const lat:number = res.coord.lat
                 const lon:number = res.coord.lon
-                setLattitude(lat)
-                setLongitude(lon)
 
                 const urlOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=minutely&appid=${APIkey}`
                 fetch(urlOneCall)
@@ -78,7 +70,7 @@ const App: React.FC = () => {
 
                             const exactday = Intl.DateTimeFormat("en-us", { 
                                 weekday: "short" })
-                            .format(result.daily[i].dt * 1000);
+                            .format((result.daily[i].dt * 1000)+18000000+result.timezone_offset*1000);
                             daily_day_of_week_array.push(exactday)
 
                             const exactdate = Intl.DateTimeFormat("en-us", { 
@@ -104,7 +96,7 @@ const App: React.FC = () => {
 
                             const exact_hour = Intl.DateTimeFormat('en-US', { 
                                 hour: 'numeric' })
-                            .format(result.hourly[j].dt * 1000)
+                            .format((result.hourly[j].dt * 1000) + 18000000+result.timezone_offset*1000)
                             hourly_hours_array.push(exact_hour)
 
                             const hourly_feels_like:number = result.hourly[j].feels_like.toFixed(0)
@@ -119,46 +111,69 @@ const App: React.FC = () => {
                         const c_temp: number = result.current.temp.toFixed(0)
                         const f_like:number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
-                        const w_gust = res.wind.gust
 
-                        console.log(result)
+                        //tend to get undefined returned from the api when wind is low or zero. manually setting 0 if it is the case
+                        let w_gust = res.wind.gust
+                        if (w_gust===undefined){
+                            w_gust = 0
+                        }
+
                         let background_image = ''
-                        if (result.current.weather[0].icon === '11d'){
-                            background_image = '../img/tstorm.jpeg'
-                        }
-                        else if(result.current.weather[0].icon === '09d'){
-                            background_image = '../img/drizzle.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '10d') {
-                            background_image = '../img/rain.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '13d') {
-                            background_image = '../img/snow.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '50d') {
-                            background_image = '../img/atmosphere.png'
-                        }
-                        else if (result.current.weather[0].icon === '01d') {
-                            background_image = '../img/clear.png'
-                        }
-                        else if (result.current.weather[0].icon === '01n') {
-                            background_image = '../img/night.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '02d' || '03d' || '04d') {
-                            background_image = '../img/clear.png'
-                        }
-                        else if (result.current.weather[0].icon === '02n' || '03n' || '04n') {
-                            background_image = '../img/night.jpg'
-                        }
-                        else{
-                            
-                        }
-                        //inside a return so each state updates at the same time 
-                        return (    
-                            setLattitude(lat),
-                            setLongitude(lon),
+                        let weather = result.current.weather[0].icon
+                        switch (true){
+                            case weather === '11d':
+                            case weather === '11n':
+                                background_image = './././img/thunderstorm.jpg'
+                                break;
+                            case weather === '09d':
+                                background_image = './././img/drizzleD.png'
+                                break;
+                            case weather === '09n':
+                                background_image = './././img/drizzleN.png'
+                                break;
+                            case weather === '10d':
+                                background_image = './././img/rainD.jpg'
+                                break;
+                            case weather === '10n':
+                                background_image = './././img/rainN.png'
+                                break;                            
+                            case weather === '13d':
+                                background_image = './././img/snowD.jpg'
+                                break;
+                            case weather === '13n':
+                                background_image = './././img/snowN.jpg'
+                                break;
+                            case weather === '50d':
+                                background_image = './././img/atmosphereD.png'
+                                break;
+                            case weather === '50n':
+                                background_image = './././img/atmosphereN.jpg'
+                                break;
+                            case weather === '01d':
+                            case weather === '02d':
+                                background_image = './././img/clearD.jpg'
+                                break;
+                            case weather === '01n':
+                            case weather === '02n':
+                                background_image = './././img/clearN.png'
+                                break;
+                            case weather === '04d':
+                            case weather === '03d':    
+                                background_image = './././img/cloudyD.png'
+                                break;
+                            case weather === '04n':
+                            case weather === '03n':
+                                background_image = './././img/cloudyN.png'
+                                break;
+                            default:
+                                background_image = './././img/snowN.jpg'
+                          }
 
+                        const timezone_calc = (18000000+result.timezone_offset*1000)
+
+                        return (
                             setSearchedCity(res.name),
+                            setTimezoneOffset(timezone_calc),
 
                             setTemp(c_temp),
                             setFeelsLike(f_like),
@@ -182,9 +197,6 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array)
-
-
-                            
                         )
                     })
             })
@@ -198,7 +210,7 @@ const App: React.FC = () => {
 
 
 
-    //not really sure on the ideal timeout. but i'm only allowing once per page load so it is high.
+    //not really sure on the ideal timeout. but i'm only allowing once per page load so it is higher than the default 5000.
     const geolocation_options = {
         enableHighAccuracy: true,
         timeout: 9000,
@@ -206,15 +218,7 @@ const App: React.FC = () => {
     };
     
     async function GeolocationSuccess(pos) {
-        //http://api.openweathermap.org/geo/1.0/reverse?lat=51.5098&lon=-0.1180&limit=5&appid=49cc8c821cd2aff9af04c9f98c36eb74
-        //http://api.openweathermap.org/geo/1.0/reverse?lat=35.9392747&lon=-78.6115256&limit=5&appid=3c7b2ffc55a4c134c4c6d1e73e3b0096
         const crd = pos.coords;
-        console.log(crd)
-
-        // console.log('Your current position is:');
-        // console.log(`Latitude : ${crd.latitude}`);
-        // console.log(`Longitude: ${crd.longitude}`);
-        // console.log(`More or less ${crd.accuracy} meters.`);
 
         const lati = crd.latitude
         const longi = crd.longitude
@@ -241,7 +245,7 @@ const App: React.FC = () => {
                         const daily_min_temp: number = result.daily[i].temp.min.toFixed(0)
                         daily_min_array.push(daily_min_temp)
 
-                        const exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format(result.daily[i].dt * 1000);
+                        const exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format((result.daily[i].dt * 1000)+18000000+result.timezone_offset*1000);
                         daily_day_of_week_array.push(exactday)
 
                         const exactdate = Intl.DateTimeFormat("en-us", { month: '2-digit', day: '2-digit' }).format(result.daily[i].dt * 1000);
@@ -263,7 +267,7 @@ const App: React.FC = () => {
                         const hourly_tempe: number = result.hourly[j].temp.toFixed(0)
                         hourly_temps_array.push(hourly_tempe)
 
-                        const exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(result.hourly[j].dt * 1000)
+                        const exact_hour = Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format((result.hourly[j].dt * 1000)+18000000+result.timezone_offset*1000)
                         hourly_hours_array.push(exact_hour)
 
                         const hourly_feels_like: number = result.hourly[j].feels_like.toFixed(0)
@@ -280,44 +284,68 @@ const App: React.FC = () => {
                         const c_temp: number = result.current.temp.toFixed(0)
                         const f_like: number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
-                        const w_gust = res.wind.gust
-
-                        //inside a return so each state updates in sync
+                        let w_gust = res.wind.gust
+                        if (w_gust===undefined){
+                            w_gust = 0
+                        }
 
                         let background_image = ''
-                        if (result.current.weather[0].icon === '11d'){
-                            background_image = '../img/tstorm.jpeg'
+                        let weather = result.current.weather[0].icon
+                        switch (true){
+                            case weather === '11d':
+                            case weather === '11n':
+                                background_image = './././img/thunderstorm.jpg'
+                                break;
+                            case weather === '09d':
+                                background_image = './././img/drizzleD.png'
+                                break;
+                            case weather === '09n':
+                                background_image = './././img/drizzleN.png'
+                                break;
+                            case weather === '10d':
+                                background_image = './././img/rainD.jpg'
+                                break;
+                            case weather === '10n':
+                                background_image = './././img/rainN.png'
+                                break;                            
+                            case weather === '13d':
+                                background_image = './././img/snowD.jpg'
+                                break;
+                            case weather === '13n':
+                                background_image = './././img/snowN.jpg'
+                                break;
+                            case weather === '50d':
+                                background_image = './././img/atmosphereD.png'
+                                break;
+                            case weather === '50n':
+                                background_image = './././img/atmosphereN.jpg'
+                                break;
+                            case weather === '01d':
+                            case weather === '02d':
+                                background_image = './././img/clearD.jpg'
+                                break;
+                            case weather === '01n':
+                            case weather === '02n':
+                                background_image = './././img/clearN.png'
+                                break;
+                            case weather === '04d':
+                            case weather === '03n':    
+                                background_image = './././img/cloudyD.png'
+                                break;
+                            case weather === '04n':
+                            case weather === '03n':
+                                background_image = './././img/cloudyN.png'
+                                break;
+                            default:
+                                background_image = './././img/snowN.jpg'
                         }
-                        else if(result.current.weather[0].icon === '09d'){
-                            background_image = '../img/drizzle.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '10d') {
-                            background_image = '../img/rain.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '13d') {
-                            background_image = '../img/snow.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '50d') {
-                            background_image = '../img/atmosphere.png'
-                        }
-                        else if (result.current.weather[0].icon === '01d') {
-                            background_image = '../img/clear.png'
-                        }
-                        else if (result.current.weather[0].icon === '01n') {
-                            background_image = '../img/night.jpg'
-                        }
-                        else if (result.current.weather[0].icon === '02d' || '03d' || '04d') {
-                            background_image = '../img/clear.png'
-                        }
-                        else if (result.current.weather[0].icon === '02n' || '03n' || '04n') {
-                            background_image = '../img/night.jpg'
-                        }
-                        return(
-                            setLattitude(lati),
-                            setLongitude(longi),
 
+                        const timezone_calc = (18000000+result.timezone_offset*1000)
+                        
+                        return(
                             setCityName(your_location),
                             setSearchedCity(your_location),
+                            setTimezoneOffset(timezone_calc),
 
                             setTemp(c_temp),
                             setFeelsLike(f_like),
@@ -340,9 +368,7 @@ const App: React.FC = () => {
                             setDailyDay(daily_day_of_week_array),
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
-                            setDailyIcon(daily_icon_array),
-
-                            setDisabledBoolean(true) 
+                            setDailyIcon(daily_icon_array)
                         )
                     })
                 })
@@ -354,6 +380,10 @@ const App: React.FC = () => {
     }
 
     function ClickedMyLocation(){
+        //can't let people spam the button and get the api key banned!
+        const button = document.querySelector('button')
+        button.disabled = true
+
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options)
     }
 
@@ -373,6 +403,7 @@ const App: React.FC = () => {
     <div className='page-container'
     style={{
         backgroundImage: `url(${backgroundImg})`,
+        backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover'
     }}>
 
@@ -388,9 +419,7 @@ const App: React.FC = () => {
 
             <div className='my-location'>
 
-                <button id="find-me"
-                    title='May take a moment...'
-                    disabled={disabledBoolean}
+                <button id='find-me'
                     onClick={() => ClickedMyLocation()}>
                     My Location
                 </button><br />
@@ -409,7 +438,8 @@ const App: React.FC = () => {
             wind_gust={windGust}
             icon={todayIcon}
             location={searchedCity}
-            background_image={backgroundImg} />
+            background_image={backgroundImg} 
+            timezone_offset={timezoneOffset}/>
         </div>
 
         <HashRouter>

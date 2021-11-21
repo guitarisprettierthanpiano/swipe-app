@@ -12,10 +12,10 @@ interface Props{
 }
 
 const Hourly: React.FC<Props> = (props) => {
-        const [webkitMaskStyle, setWebkitMaskStyle] = useState('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 5%)')
+        const [webkitMaskStyle, setWebkitMaskStyle] = useState('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 9%)')
 
         //this function is called once the user drags the daily container. it removes the fade webkit style.
-        function EndScroll(){
+        const EndScroll = () => {
                 return(
                         setWebkitMaskStyle('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)')
                 )
