@@ -8,13 +8,16 @@ const Nav: React.FC = () => {
         <ul>
             <li></li>
             <li></li>
+
             <NavLink
-            exact activeClassname='active' to='/'>
+            exact activeClassname='active' 
+            to='/'>
                 <li>Hourly</li>
             </NavLink>
 
             <NavLink
-            activeClassname='active' to='/daily'>
+            activeClassname='active' 
+            to='/daily'>
                 <li>Daily</li>
             </NavLink>
 

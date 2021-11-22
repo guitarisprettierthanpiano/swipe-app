@@ -18,6 +18,7 @@ interface Props{
 
 const Today: React.FC<Props> = (props) => {
 
+    // adding a blank top and blank bottom div with height 1fr so i can let the actual data have height auto.
     return(
     <>
     <div className='blank-top'></div>

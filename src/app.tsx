@@ -2,47 +2,45 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
-import Nav from './components/nav';
+import Nav from './components/nav'
 import Daily from './components/daily'
 import Hourly from './components/hourly'
 import Today from './components/today' 
 
 const App: React.FC = () => {
-    //api.openweathermap.org/data/2.5/forecast?q=raleigh&appid=49cc8c821cd2aff9af04c9f98c36eb74
-    const [cityName, setCityName] = useState('Washington DC')
-    const [searchedCity, setSearchedCity] = useState('')
+    //states used by input box
+    const [cityName, setCityName] = useState<string>('Washington DC')
+    const [searchedCity, setSearchedCity] = useState<string>(' ')
 
     //props sent to Today component
     const [temp, setTemp] = useState<number>()
     const [feelsLike, setFeelsLike] = useState<number>()
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState<string>(' ')
     const [humidity, setHumidity] = useState<number>()
     const [windSpeed, setWindSpeed] = useState<number>(0.00)
     const [windDeg, setWindDeg] = useState<number>(0.00)
-    const [windGust, setWindGust] = useState('None')
-    const [todayIcon, setTodayIcon] = useState('')
-    const [backgroundImg, setBackgroundImg] = useState('./././img/clearD.jpg')
+    const [windGust, setWindGust] = useState<string>('None')
+    const [todayIcon, setTodayIcon] = useState<string>('https://openweathermap.org/img/wn/04n@4x.png')
+    const [backgroundImg, setBackgroundImg] = useState<string>('./././img/black.png')
     const [timezoneOffset, setTimezoneOffset] = useState<number>(0)
 
     //props sent to Hourly component
-    const [hourlyTemps, setHourlyTemps] = useState([])
-    const [hourlyHours, setHourlyHours] = useState([])
-    const [hourlyFeels, setHourlyFeels] = useState([])
-    const [hourlyDescription, setHourlyDescription] = useState([])
-    const [hourlyIcon, setHourlyIcon] = useState([])
-    //let hourlyIconUrl = `http://openweathermap.org/img/wn/${todayIcon}@4x.png`
+    const [hourlyTemps, setHourlyTemps] = useState<Array<24>>([])
+    const [hourlyHours, setHourlyHours] = useState<Array<24>>([])
+    const [hourlyFeels, setHourlyFeels] = useState<Array<24>>([])
+    const [hourlyDescription, setHourlyDescription] = useState<Array<24>>([])
+    const [hourlyIcon, setHourlyIcon] = useState<Array<24>>([])
 
     //props sent to Daily component
-    const [dailyMax, setDailyMax] = useState([])
-    const [dailyMin, setDailyMin] = useState([])
-    const [dailyDay, setDailyDay] = useState([])
-    const [dailyDate, setDailyDate] = useState([])
-    const [dailyDescription, setDailyDescription] = useState([])
-    const [dailyIcon, setDailyIcon] = useState([])
+    const [dailyMax, setDailyMax] = useState<Array<8>>([])
+    const [dailyMin, setDailyMin] = useState<Array<8>>([])
+    const [dailyDay, setDailyDay] = useState<Array<8>>([])
+    const [dailyDate, setDailyDate] = useState<Array<8>>([])
+    const [dailyDescription, setDailyDescription] = useState<Array<8>>([])
+    const [dailyIcon, setDailyIcon] = useState<Array<8>>([]) 
 
     const APIkey = process.env.REACT_APP_API_KEY
-    // 4ac53b87c2233ee8de919d51d83a4347
-    const units = 'imperial' //metric, imperial or standard
+    // 4ac53b87c2233ee8de919d51d83a4347 just incase
 
     async function ApiSearchByName(){
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
@@ -51,8 +49,7 @@ const App: React.FC = () => {
                 const lat:number = res.coord.lat
                 const lon:number = res.coord.lon
 
-                const urlOneCall = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=minutely&appid=${APIkey}`
-                fetch(urlOneCall)
+                fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely&appid=${APIkey}`)
                     .then(result => result.json())
                     .then(result => {
                         const daily_max_array = []
@@ -96,7 +93,7 @@ const App: React.FC = () => {
 
                             const exact_hour = Intl.DateTimeFormat('en-US', { 
                                 hour: 'numeric' })
-                            .format((result.hourly[j].dt * 1000) + 18000000+result.timezone_offset*1000)
+                            .format((result.hourly[j].dt * 1000) + 18000000 + result.timezone_offset * 1000)
                             hourly_hours_array.push(exact_hour)
 
                             const hourly_feels_like:number = result.hourly[j].feels_like.toFixed(0)
@@ -109,10 +106,10 @@ const App: React.FC = () => {
 
 
                         const c_temp: number = result.current.temp.toFixed(0)
-                        const f_like:number = result.current.feels_like.toFixed(0)
+                        const f_like: number = result.current.feels_like.toFixed(0)
                         const w_speed = res.wind.speed
 
-                        //tend to get undefined returned from the api when wind is low or zero. manually se+tting None if it is the case
+                        //tend to get undefined returned from the api when wind is low or zero. manually setting None if it is the case
                         const w_gust_int = res.wind.gust
                         let w_gust = ''
                         if (w_gust_int===undefined){
@@ -122,13 +119,15 @@ const App: React.FC = () => {
                             w_gust = res.wind.gust.toString() + ' mph'
                         }
 
-                        let background_image = ''
-                        let weather = result.current.weather[0].icon
+                        let background_image: string = ''
+                        const weather: string = result.current.weather[0].icon
+                        //d means day, n means night.
                         switch (true){
                             case weather === '11d':
                             case weather === '11n':
                                 background_image = './././img/thunderstorm.jpg'
                                 break;
+                            //only using one thunderstorm since its usually dark anyways
                             case weather === '09d':
                                 background_image = './././img/drizzleD.png'
                                 break;
@@ -139,8 +138,8 @@ const App: React.FC = () => {
                                 background_image = './././img/rainD.jpg'
                                 break;
                             case weather === '10n':
-                                background_image = './././img/rainN.png'
-                                break;                            
+                                background_image = './././img/rainN.jpg'
+                                break;               
                             case weather === '13d':
                                 background_image = './././img/snowD.jpg'
                                 break;
@@ -173,11 +172,13 @@ const App: React.FC = () => {
                                 background_image = './././img/snowN.jpg'
                           }
 
-                        const timezone_calc = (18000000+result.timezone_offset*1000)
+                        //this variable will change the time to the local location's time. uses milliseconds.
+                        const timezone_calc = (18000000 + result.timezone_offset * 1000)
 
                         return (
                             setSearchedCity(res.name),
                             setTimezoneOffset(timezone_calc),
+                            setCityName(''),
 
                             setTemp(c_temp),
                             setFeelsLike(f_like),
@@ -206,33 +207,25 @@ const App: React.FC = () => {
             })
     }
 
-
-
-
-
-
-
-
-
     //not really sure on the ideal timeout. but i'm only allowing once per page load so it is higher than the default 5000.
     const geolocation_options = {
         enableHighAccuracy: true,
-        timeout: 9000,
+        timeout: 20000,
         maximumAge: 0
     };
     
     async function GeolocationSuccess(pos) {
         const crd = pos.coords;
 
-        const lati = crd.latitude
-        const longi = crd.longitude
+        const lati: number = crd.latitude
+        const longi: number = crd.longitude
 
         //once we have your coordinates, reverse geolocate to get the top name of your location. then fetch again two more times for current, hourly and daily weather conditions. update state at the end in one single return.
-        const fetch_via_geolocation = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${crd.latitude}&lon=${crd.longitude}&limit=5&appid=${APIkey}`)
+        const fetch_via_geolocation = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lati}&lon=${longi}&limit=2&appid=${APIkey}`)
             .then(names => names.json())
             .then(names => {
                 const your_location = names[0].name
-                fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lati}&lon=${longi}&units=${units}&exclude=minutely&appid=${APIkey}`)
+                fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lati}&lon=${longi}&units=imperial&exclude=minutely&appid=${APIkey}`)
                 .then(result=>result.json())
                 .then(result=>{
                     //puts eight daily temps in an array
@@ -249,7 +242,7 @@ const App: React.FC = () => {
                         const daily_min_temp: number = result.daily[i].temp.min.toFixed(0)
                         daily_min_array.push(daily_min_temp)
 
-                        const exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format((result.daily[i].dt * 1000)+18000000+result.timezone_offset*1000);
+                        const exactday = Intl.DateTimeFormat("en-us", { weekday: "short" }).format((result.daily[i].dt * 1000) + 18000000+ result.timezone_offset * 1000);
                         daily_day_of_week_array.push(exactday)
 
                         const exactdate = Intl.DateTimeFormat("en-us", { month: '2-digit', day: '2-digit' }).format(result.daily[i].dt * 1000);
@@ -298,13 +291,15 @@ const App: React.FC = () => {
                             w_gust = res.wind.gust.toString() + ' mph'
                         }
 
-                        let background_image = ''
-                        let weather = result.current.weather[0].icon
+                        let background_image: string = ''
+                        const weather: string = result.current.weather[0].icon
+                        //d means day, n means night.
                         switch (true){
                             case weather === '11d':
                             case weather === '11n':
                                 background_image = './././img/thunderstorm.jpg'
                                 break;
+                            //only using one thunderstorm since its usually dark anyways
                             case weather === '09d':
                                 background_image = './././img/drizzleD.png'
                                 break;
@@ -315,8 +310,8 @@ const App: React.FC = () => {
                                 background_image = './././img/rainD.jpg'
                                 break;
                             case weather === '10n':
-                                background_image = './././img/rainN.png'
-                                break;                            
+                                background_image = './././img/rainN.jpg'
+                                break;       
                             case weather === '13d':
                                 background_image = './././img/snowD.jpg'
                                 break;
@@ -346,15 +341,16 @@ const App: React.FC = () => {
                                 background_image = './././img/cloudyN.png'
                                 break;
                             default:
-                                background_image = './././img/snowN.jpg'
+                                background_image = './././img/cloudyD.png'
                         }
 
-                        const timezone_calc = (18000000+result.timezone_offset*1000)
+                        //this variable will change the time to the local location's time. uses milliseconds
+                        const timezone_calc = (18000000 + result.timezone_offset * 1000)
                         
                         return(
-                            setCityName(your_location),
                             setSearchedCity(your_location),
                             setTimezoneOffset(timezone_calc),
+                            setCityName(''),
 
                             setTemp(c_temp),
                             setFeelsLike(f_like),
@@ -385,39 +381,41 @@ const App: React.FC = () => {
     }
 
     function GeolocationError(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
+        console.warn(`ERROR(${err.code}): ${err.message}`); 
     }
 
     function ClickedMyLocation(){
         //can't let people spam the button and get the api key banned!
         const button = document.querySelector('button')
         button.disabled = true
+        button.innerText = 'Searching...'
 
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options)
+
+        button.innerText = 'Done.'
     }
 
-    //only fetch if enter key is pressed
+    //only fetch api if enter key is pressed.
     const SearchCity = event => {
         if (event.key === 'Enter'){
             ApiSearchByName()
         }
     }
 
-    //fetches something on page load, so page doesn't look barren
+    //fetches something on page load, so page doesn't look barren. washington dc is the default for now i think.
     useEffect(() => {
-        // ApiSearchByName();
+        ApiSearchByName();
     }, [])
 
     return(
     <div className='page-container'
     style={{
-        backgroundImage: `url(${backgroundImg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
-    }}>
+        backgroundImage: `url(${backgroundImg})`
+    }}> 
 
         <div className='top-container'>
             <input
+                placeholder='Search...'
                 id='input-box'
                 autoFocus
                 type='text'
