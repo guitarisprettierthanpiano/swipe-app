@@ -17,7 +17,7 @@ const Daily: React.FC<Props> = (props) => {
 
     const [webkitMaskStyle, setWebkitMaskStyle] = useState('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%)')
 
-    //this function is called once the user drags the daily container. it negates the fade webkit style.
+    //this function is called once the user drags the daily container. it negates the fade webkit mask.
     const EndScroll = () => {
         return (
             setWebkitMaskStyle('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)')
@@ -34,7 +34,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[0]}</span>
                 <span className='daily-date'>{props.daily_date[0]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[0]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[0]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[0]}°</span>
                 <span className='daily-min'>/{props.daily_min[0]}°</span>
@@ -47,7 +47,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[1]}</span>
                 <span className='daily-date'>{props.daily_date[1]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[1]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[1]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[1]}°</span>
                 <span className='daily-min'>/{props.daily_min[1]}°</span>
@@ -60,7 +60,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[2]}</span>
                 <span className='daily-date'>{props.daily_date[2]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[2]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[2]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[2]}°</span>
                 <span className='daily-min'>/{props.daily_min[2]}°</span>
@@ -73,7 +73,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[3]}</span>
                 <span className='daily-date'>{props.daily_date[3]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[3]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[3]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[3]}°</span>
                 <span className='daily-min'>/{props.daily_min[3]}°</span>
@@ -86,7 +86,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[4]}</span>
                 <span className='daily-date'>{props.daily_date[4]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[4]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[4]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[4]}°</span>
                 <span className='daily-min'>/{props.daily_min[4]}°</span>
@@ -99,7 +99,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[5]}</span>
                 <span className='daily-date'>{props.daily_date[5]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[5]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[5]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[5]}°</span>
                 <span className='daily-min'>/{props.daily_min[5]}°</span>
@@ -112,7 +112,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[6]}</span>
                 <span className='daily-date'>{props.daily_date[6]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[6]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[6]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[6]}°</span>
                 <span className='daily-min'>/{props.daily_min[6]}°</span>
@@ -125,7 +125,7 @@ const Daily: React.FC<Props> = (props) => {
                 <span className='daily-day'>{props.daily_day[7]}</span>
                 <span className='daily-date'>{props.daily_date[7]}</span>
             </div>
-            <img src={`http://openweathermap.org/img/wn/${props.daily_icon[7]}@2x.png`}></img>
+            <img src={`https://openweathermap.org/img/wn/${props.daily_icon[7]}@2x.png`}></img>
             <div className='daily-max-low'>
                 <span className='daily-max'>{props.daily_max[7]}°</span>
                 <span className='daily-min'>/{props.daily_min[7]}°</span>

@@ -40,7 +40,6 @@ const App: React.FC = () => {
     const [dailyIcon, setDailyIcon] = useState<Array<8>>([]) 
 
     const APIkey = process.env.REACT_APP_API_KEY
-    // 4ac53b87c2233ee8de919d51d83a4347 just incase
 
     async function ApiSearchByName(){
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
@@ -221,7 +220,7 @@ const App: React.FC = () => {
         const longi: number = crd.longitude
 
         //once we have your coordinates, reverse geolocate to get the top name of your location. then fetch again two more times for current, hourly and daily weather conditions. update state at the end in one single return.
-        const fetch_via_geolocation = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lati}&lon=${longi}&limit=2&appid=${APIkey}`)
+        const fetch_via_geolocation = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lati}&lon=${longi}&limit=2&appid=${APIkey}`)
             .then(names => names.json())
             .then(names => {
                 const your_location = names[0].name
