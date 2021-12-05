@@ -346,6 +346,7 @@ const App: React.FC = () => {
                         //this variable will change the time to the local location's time. uses milliseconds
                         const timezone_calc = (18000000 + result.timezone_offset * 1000)
                         
+                        const button = document.querySelector('button')
                         return(
                             setSearchedCity(your_location),
                             setTimezoneOffset(timezone_calc),
@@ -372,7 +373,9 @@ const App: React.FC = () => {
                             setDailyDay(daily_day_of_week_array),
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
-                            setDailyIcon(daily_icon_array)
+                            setDailyIcon(daily_icon_array),
+
+                            button.innerText = 'Done.'
                         )
                     })
                 })
