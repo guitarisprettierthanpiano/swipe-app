@@ -7,6 +7,21 @@ import Daily from './components/daily'
 import Hourly from './components/hourly'
 import Today from './components/today' 
 
+import atmosphereD from './img/atmosphereD.webp'
+import atmosphereN from './img/atmosphereN.webp'
+import Black from './img/black.webp'
+import clearD from './img/clearD.webp'
+import clearN from './img/clearN.webp'
+import cloudyD from './img/cloudyD.webp'
+import cloudyN from './img/cloudyN.webp'
+import drizzleD from './img/drizzleD.webp'
+import drizzleN from './img/drizzleN.webp'
+import rainD from './img/rainD.webp'
+import rainN from './img/rainD.webp'
+import snowD from './img/snowD.webp'
+import snowN from './img/snowN.webp'
+import thunderstorm from './img/thunderstorm.webp'
+
 const App: React.FC = () => {
     //states used by input box
     const [cityName, setCityName] = useState<string>('Washington DC')
@@ -21,7 +36,7 @@ const App: React.FC = () => {
     const [windDeg, setWindDeg] = useState<number>(0.00)
     const [windGust, setWindGust] = useState<string>('None')
     const [todayIcon, setTodayIcon] = useState<string>('https://openweathermap.org/img/wn/04n@4x.png')
-    const [backgroundImg, setBackgroundImg] = useState<string>('./././img/black.png')
+    const [backgroundImg, setBackgroundImg] = useState<string>(Black)
     const [timezoneOffset, setTimezoneOffset] = useState<number>(0)
 
     //props sent to Hourly component
@@ -124,51 +139,51 @@ const App: React.FC = () => {
                         switch (true){
                             case weather === '11d':
                             case weather === '11n':
-                                background_image = './././img/thunderstorm.jpg'
+                                background_image = thunderstorm
                                 break;
                             //only using one thunderstorm since its usually dark anyways
                             case weather === '09d':
-                                background_image = './././img/drizzleD.png'
+                                background_image = drizzleD
                                 break;
                             case weather === '09n':
-                                background_image = './././img/drizzleN.png'
+                                background_image = drizzleN
                                 break;
                             case weather === '10d':
-                                background_image = './././img/rainD.jpg'
+                                background_image = rainD
                                 break;
                             case weather === '10n':
-                                background_image = './././img/rainN.jpg'
+                                background_image = rainN
                                 break;               
                             case weather === '13d':
-                                background_image = './././img/snowD.jpg'
+                                background_image = snowD
                                 break;
                             case weather === '13n':
-                                background_image = './././img/snowN.jpg'
+                                background_image = snowN
                                 break;
                             case weather === '50d':
-                                background_image = './././img/atmosphereD.png'
+                                background_image = atmosphereD
                                 break;
                             case weather === '50n':
-                                background_image = './././img/atmosphereN.jpg'
+                                background_image = atmosphereN
                                 break;
                             case weather === '01d':
                             case weather === '02d':
-                                background_image = './././img/clearD.jpg'
+                                background_image = clearD
                                 break;
                             case weather === '01n':
                             case weather === '02n':
-                                background_image = './././img/clearN.png'
+                                background_image = clearN
                                 break;
                             case weather === '04d':
                             case weather === '03d':    
-                                background_image = './././img/cloudyD.png'
+                                background_image = cloudyD
                                 break;
                             case weather === '04n':
                             case weather === '03n':
-                                background_image = './././img/cloudyN.png'
+                                background_image = cloudyN
                                 break;
                             default:
-                                background_image = './././img/snowN.jpg'
+                                background_image = snowN
                           }
 
                         //this variable will change the time to the local location's time. uses milliseconds.
@@ -296,51 +311,51 @@ const App: React.FC = () => {
                         switch (true){
                             case weather === '11d':
                             case weather === '11n':
-                                background_image = './././img/thunderstorm.jpg'
+                                background_image = thunderstorm
                                 break;
                             //only using one thunderstorm since its usually dark anyways
                             case weather === '09d':
-                                background_image = './././img/drizzleD.png'
+                                background_image = drizzleD
                                 break;
                             case weather === '09n':
-                                background_image = './././img/drizzleN.png'
+                                background_image = drizzleN
                                 break;
                             case weather === '10d':
-                                background_image = './././img/rainD.jpg'
+                                background_image = rainD
                                 break;
                             case weather === '10n':
-                                background_image = './././img/rainN.jpg'
+                                background_image = rainN
                                 break;       
                             case weather === '13d':
-                                background_image = './././img/snowD.jpg'
+                                background_image = snowD
                                 break;
                             case weather === '13n':
-                                background_image = './././img/snowN.jpg'
+                                background_image = snowN
                                 break;
                             case weather === '50d':
-                                background_image = './././img/atmosphereD.png'
+                                background_image = atmosphereD
                                 break;
                             case weather === '50n':
-                                background_image = './././img/atmosphereN.jpg'
+                                background_image = atmosphereN
                                 break;
                             case weather === '01d':
                             case weather === '02d':
-                                background_image = './././img/clearD.jpg'
+                                background_image = clearD
                                 break;
                             case weather === '01n':
                             case weather === '02n':
-                                background_image = './././img/clearN.png'
+                                background_image = clearN
                                 break;
                             case weather === '04d':
                             case weather === '03n':    
-                                background_image = './././img/cloudyD.png'
+                                background_image = cloudyD
                                 break;
                             case weather === '04n':
                             case weather === '03n':
-                                background_image = './././img/cloudyN.png'
+                                background_image = cloudyN
                                 break;
                             default:
-                                background_image = './././img/cloudyD.png'
+                                background_image = cloudyD
                         }
 
                         //this variable will change the time to the local location's time. uses milliseconds
