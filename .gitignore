@@ -1,3 +1,2 @@
-#.env
-
-#can't hide .env with github pages?
+.env
+node_modules
