@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState }  from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 //each prop sent is an array of 24 hours of data.

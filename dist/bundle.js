@@ -3659,8 +3659,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
-const react_1 = __webpack_require__(294);
+const react_1 = __importStar(__webpack_require__(294));
 const react_router_dom_1 = __webpack_require__(181);
 const nav_1 = __importDefault(__webpack_require__(682));
 const daily_1 = __importDefault(__webpack_require__(490));
@@ -4024,25 +4023,25 @@ const App = () => {
     (0, react_1.useEffect)(() => {
         ApiSearchByName();
     }, []);
-    return (React.createElement("div", { className: 'page-container', style: {
+    return (react_1.default.createElement("div", { className: 'page-container', style: {
             backgroundImage: `url(${backgroundImg})`
         } },
-        React.createElement("div", { className: 'top-container' },
-            React.createElement("input", { placeholder: 'Search...', id: 'input-box', autoFocus: true, type: 'text', onChange: event => setCityName(event.target.value), value: cityName, onKeyPress: SearchCity }),
-            React.createElement("div", { className: 'my-location' },
-                React.createElement("button", { id: 'find-me', onClick: () => ClickedMyLocation() }, "My Location"),
-                React.createElement("br", null),
-                React.createElement("p", { id: "status" }),
-                React.createElement("a", { id: "map-link", target: "_blank" }))),
-        React.createElement("div", { className: 'middle-container' },
-            React.createElement(today_1.default, { temperature: temp, temp_feels_like: feelsLike, description: description, humidity: humidity, wind_speed: windSpeed, wind_degrees: windDeg, wind_gust: windGust, icon: todayIcon, location: searchedCity, background_image: backgroundImg, timezone_offset: timezoneOffset })),
-        React.createElement(react_router_dom_1.HashRouter, null,
-            React.createElement("div", { className: 'bottom-container' },
-                React.createElement(nav_1.default, null),
-                React.createElement("div", { className: 'switch-container' },
-                    React.createElement(react_router_dom_1.Switch, null,
-                        React.createElement(react_router_dom_1.Route, { exact: true, path: '/', render: props => React.createElement(hourly_1.default, { ...props, hourly_temps: hourlyTemps, hourly_hours: hourlyHours, hourly_feels: hourlyFeels, hourly_description: hourlyDescription, hourly_icon: hourlyIcon }) }),
-                        React.createElement(react_router_dom_1.Route, { path: '/daily', render: props => React.createElement(daily_1.default, { ...props, daily_max: dailyMax, daily_min: dailyMin, daily_day: dailyDay, daily_date: dailyDate, daily_description: dailyDescription, daily_icon: dailyIcon }) })))))));
+        react_1.default.createElement("div", { className: 'top-container' },
+            react_1.default.createElement("input", { placeholder: 'Search...', id: 'input-box', autoFocus: true, type: 'text', onChange: event => setCityName(event.target.value), value: cityName, onKeyPress: SearchCity }),
+            react_1.default.createElement("div", { className: 'my-location' },
+                react_1.default.createElement("button", { id: 'find-me', onClick: () => ClickedMyLocation() }, "My Location"),
+                react_1.default.createElement("br", null),
+                react_1.default.createElement("p", { id: "status" }),
+                react_1.default.createElement("a", { id: "map-link", target: "_blank" }))),
+        react_1.default.createElement("div", { className: 'middle-container' },
+            react_1.default.createElement(today_1.default, { temperature: temp, temp_feels_like: feelsLike, description: description, humidity: humidity, wind_speed: windSpeed, wind_degrees: windDeg, wind_gust: windGust, icon: todayIcon, location: searchedCity, background_image: backgroundImg, timezone_offset: timezoneOffset })),
+        react_1.default.createElement(react_router_dom_1.HashRouter, null,
+            react_1.default.createElement("div", { className: 'bottom-container' },
+                react_1.default.createElement(nav_1.default, null),
+                react_1.default.createElement("div", { className: 'switch-container' },
+                    react_1.default.createElement(react_router_dom_1.Switch, null,
+                        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: '/', render: props => react_1.default.createElement(hourly_1.default, { ...props, hourly_temps: hourlyTemps, hourly_hours: hourlyHours, hourly_feels: hourlyFeels, hourly_description: hourlyDescription, hourly_icon: hourlyIcon }) }),
+                        react_1.default.createElement(react_router_dom_1.Route, { path: '/daily', render: props => react_1.default.createElement(daily_1.default, { ...props, daily_max: dailyMax, daily_min: dailyMin, daily_day: dailyDay, daily_date: dailyDate, daily_description: dailyDescription, daily_icon: dailyIcon }) })))))));
 };
 exports["default"] = App;
 
@@ -4077,8 +4076,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
-const react_1 = __webpack_require__(294);
+const react_1 = __importStar(__webpack_require__(294));
 const react_indiana_drag_scroll_1 = __importDefault(__webpack_require__(804));
 const Daily = (props) => {
     const [webkitMaskStyle, setWebkitMaskStyle] = (0, react_1.useState)('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%)');
@@ -4086,119 +4084,119 @@ const Daily = (props) => {
     const EndScroll = () => {
         return (setWebkitMaskStyle('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)'));
     };
-    return (React.createElement(react_indiana_drag_scroll_1.default, { onEndScroll: () => EndScroll(), style: { WebkitMask: `${webkitMaskStyle}` }, className: 'daily-container' },
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[0]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[0])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[0]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+    return (react_1.default.createElement(react_indiana_drag_scroll_1.default, { onEndScroll: () => EndScroll(), style: { WebkitMask: `${webkitMaskStyle}` }, className: 'daily-container' },
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[0]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[0])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[0]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[0],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[0],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[0])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[1]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[1])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[1]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[0])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[1]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[1])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[1]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[1],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[1],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[1])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[2]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[2])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[2]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[1])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[2]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[2])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[2]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[2],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[2],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[2])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[3]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[3])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[3]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[2])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[3]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[3])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[3]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[3],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[3],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[3])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[4]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[4])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[4]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[3])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[4]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[4])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[4]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[4],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[4],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[4])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[5]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[5])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[5]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[4])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[5]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[5])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[5]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[5],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[5],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[5])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[6]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[6])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[6]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[5])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[6]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[6])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[6]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[6],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[6],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[6])),
-        React.createElement("div", { className: 'daily-subcontainer' },
-            React.createElement("div", { className: 'daily-day-date' },
-                React.createElement("span", { className: 'daily-day' }, props.daily_day[7]),
-                React.createElement("span", { className: 'daily-date' }, props.daily_date[7])),
-            React.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[7]}@2x.png` }),
-            React.createElement("div", { className: 'daily-max-low' },
-                React.createElement("span", { className: 'daily-max' },
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[6])),
+        react_1.default.createElement("div", { className: 'daily-subcontainer' },
+            react_1.default.createElement("div", { className: 'daily-day-date' },
+                react_1.default.createElement("span", { className: 'daily-day' }, props.daily_day[7]),
+                react_1.default.createElement("span", { className: 'daily-date' }, props.daily_date[7])),
+            react_1.default.createElement("img", { src: `https://openweathermap.org/img/wn/${props.daily_icon[7]}@2x.png` }),
+            react_1.default.createElement("div", { className: 'daily-max-low' },
+                react_1.default.createElement("span", { className: 'daily-max' },
                     props.daily_max[7],
                     "\u00B0"),
-                React.createElement("span", { className: 'daily-min' },
+                react_1.default.createElement("span", { className: 'daily-min' },
                     "/",
                     props.daily_min[7],
                     "\u00B0")),
-            React.createElement("span", { className: 'daily-description' }, props.daily_description[7]))));
+            react_1.default.createElement("span", { className: 'daily-description' }, props.daily_description[7]))));
 };
 exports["default"] = Daily;
 
@@ -4233,8 +4231,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
-const react_1 = __webpack_require__(294);
+const react_1 = __importStar(__webpack_require__(294));
 const react_indiana_drag_scroll_1 = __importDefault(__webpack_require__(804));
 const Hourly = (props) => {
     const [webkitMaskStyle, setWebkitMaskStyle] = (0, react_1.useState)('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%)');
@@ -4242,271 +4239,271 @@ const Hourly = (props) => {
     const EndScroll = () => {
         return (setWebkitMaskStyle('linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%)'));
     };
-    return (React.createElement(react_indiana_drag_scroll_1.default, { onEndScroll: () => EndScroll(), style: { WebkitMask: `${webkitMaskStyle}` }, className: 'hourly-container' },
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[0]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[0]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+    return (react_1.default.createElement(react_indiana_drag_scroll_1.default, { onEndScroll: () => EndScroll(), style: { WebkitMask: `${webkitMaskStyle}` }, className: 'hourly-container' },
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[0]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[0]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[0],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[0],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[0])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[1]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[1]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[0])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[1]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[1]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[1],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[1],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[1])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[2]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[2]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[1])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[2]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[2]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[2],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[2],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[2])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[3]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[3]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[2])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[3]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[3]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[3],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[3],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[3])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[4]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[4]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[3])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[4]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[4]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[4],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[4],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[4])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[5]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[5]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[4])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[5]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[5]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[5],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[5],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[5])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[6]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[6]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[5])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[6]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[6]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[6],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[6],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[6])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[7]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[7]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[6])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[7]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[7]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[7],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[7],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[7])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[8]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[8]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[7])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[8]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[8]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[8],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[8],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[8])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[9]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[9]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[8])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[9]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[9]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[9],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[9],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[9])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[10]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[10]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[9])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[10]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[10]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[10],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[10],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[10])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[11]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[11]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[10])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[11]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[11]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[11],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[11],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[11])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[12]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[12]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[11])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[12]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[12]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[12],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[12],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[12])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[13]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[13]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[12])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[13]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[13]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[13],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[13],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[13])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[14]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[14]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[13])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[14]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[14]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[14],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[14],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[14])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[15]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[15]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[14])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[15]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[15]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[15],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[15],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[15])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[16]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[16]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[15])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[16]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[16]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[16],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[16],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[16])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[17]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[17]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[16])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[17]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[17]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[17],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[17],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[17])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[18]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[18]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[17])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[18]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[18]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[18],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[18],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[18])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[19]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[19]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[18])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[19]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[19]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[19],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[19],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[19])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[20]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[20]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[19])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[20]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[20]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[20],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[20],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[20])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[21]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[21]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[20])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[21]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[21]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[21],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[21],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[21])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[22]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[22]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[21])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[22]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[22]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[22],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[22],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[22])),
-        React.createElement("div", { className: 'hourly-subcontainer' },
-            React.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[23]),
-            React.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[23]}@4x.png` }),
-            React.createElement("span", { className: 'hourly-temp' },
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[22])),
+        react_1.default.createElement("div", { className: 'hourly-subcontainer' },
+            react_1.default.createElement("span", { className: 'hourly-hours' }, props.hourly_hours[23]),
+            react_1.default.createElement("img", { className: 'hourly-img', src: `https://openweathermap.org/img/wn/${props.hourly_icon[23]}@4x.png` }),
+            react_1.default.createElement("span", { className: 'hourly-temp' },
                 props.hourly_temps[23],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-feels' },
+            react_1.default.createElement("span", { className: 'hourly-feels' },
                 "Feels Like ",
                 props.hourly_feels[23],
                 "\u00B0"),
-            React.createElement("span", { className: 'hourly-description' }, props.hourly_description[23]))));
+            react_1.default.createElement("span", { className: 'hourly-description' }, props.hourly_description[23]))));
 };
 exports["default"] = Hourly;
 
@@ -4518,39 +4515,23 @@ exports["default"] = Hourly;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
+const react_1 = __importDefault(__webpack_require__(294));
 const react_router_dom_1 = __webpack_require__(181);
 const Nav = () => {
-    return (React.createElement("nav", null,
-        React.createElement("ul", null,
-            React.createElement("li", null),
-            React.createElement("li", null),
-            React.createElement(react_router_dom_1.NavLink, { exact: true, activeClassname: 'active', to: '/' },
-                React.createElement("li", null, "Hourly")),
-            React.createElement(react_router_dom_1.NavLink, { activeClassname: 'active', to: '/daily' },
-                React.createElement("li", null, "Daily")),
-            React.createElement("li", null),
-            React.createElement("li", null))));
+    return (react_1.default.createElement("nav", null,
+        react_1.default.createElement("ul", null,
+            react_1.default.createElement("li", null),
+            react_1.default.createElement("li", null),
+            react_1.default.createElement(react_router_dom_1.NavLink, { exact: true, activeClassname: 'active', to: '/' },
+                react_1.default.createElement("li", null, "Hourly")),
+            react_1.default.createElement(react_router_dom_1.NavLink, { activeClassname: 'active', to: '/daily' },
+                react_1.default.createElement("li", null, "Daily")),
+            react_1.default.createElement("li", null),
+            react_1.default.createElement("li", null))));
 };
 exports["default"] = Nav;
 
@@ -4562,62 +4543,46 @@ exports["default"] = Nav;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
+const react_1 = __importDefault(__webpack_require__(294));
 const Today = (props) => {
     // adding a blank top and blank bottom div with height 1fr so i can let the actual data have height auto.
-    return (React.createElement(React.Fragment, null,
-        React.createElement("div", { className: 'blank-top' }),
-        React.createElement("span", { id: 'current-weather' }, props.location),
-        React.createElement("span", { id: 'time' }, Intl.DateTimeFormat('en-US', {
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { className: 'blank-top' }),
+        react_1.default.createElement("span", { id: 'current-weather' }, props.location),
+        react_1.default.createElement("span", { id: 'time' }, Intl.DateTimeFormat('en-US', {
             hour: 'numeric',
             minute: '2-digit'
         })
             .format(Date.now() + props.timezone_offset)),
-        React.createElement("div", { className: 'today-data' },
-            React.createElement("div", { className: 'today-west' },
-                React.createElement("img", { id: 'weather-img', src: `${props.icon}` }),
-                React.createElement("span", { id: 'overcast' }, props.description)),
-            React.createElement("div", { className: 'today-east' },
-                React.createElement("div", { className: 'today-right-top' },
-                    React.createElement("span", { id: 'temp' },
+        react_1.default.createElement("div", { className: 'today-data' },
+            react_1.default.createElement("div", { className: 'today-west' },
+                react_1.default.createElement("img", { id: 'weather-img', src: `${props.icon}` }),
+                react_1.default.createElement("span", { id: 'overcast' }, props.description)),
+            react_1.default.createElement("div", { className: 'today-east' },
+                react_1.default.createElement("div", { className: 'today-right-top' },
+                    react_1.default.createElement("span", { id: 'temp' },
                         props.temperature,
                         "\u00B0"),
-                    React.createElement("span", { id: 'real-feel' },
+                    react_1.default.createElement("span", { id: 'real-feel' },
                         "Feels Like ",
                         props.temp_feels_like,
                         "\u00B0")),
-                React.createElement("div", { className: 'today-right' },
-                    React.createElement("span", { id: 'air-quality' }, "Humidity"),
-                    React.createElement("span", { id: 'air-quality-data' },
+                react_1.default.createElement("div", { className: 'today-right' },
+                    react_1.default.createElement("span", { id: 'air-quality' }, "Humidity"),
+                    react_1.default.createElement("span", { id: 'air-quality-data' },
                         props.humidity,
                         "%"),
-                    React.createElement("span", { id: 'wind' }, "Wind Speed"),
-                    React.createElement("span", { id: 'wind-data' },
+                    react_1.default.createElement("span", { id: 'wind' }, "Wind Speed"),
+                    react_1.default.createElement("span", { id: 'wind-data' },
                         props.wind_speed,
                         " mph"),
-                    React.createElement("span", { id: 'wind-gusts' }, "Wind Gusts"),
-                    React.createElement("span", { id: 'wind-gusts-data' }, props.wind_gust)))),
-        React.createElement("div", { className: 'blank-bottom' })));
+                    react_1.default.createElement("span", { id: 'wind-gusts' }, "Wind Gusts"),
+                    react_1.default.createElement("span", { id: 'wind-gusts-data' }, props.wind_gust)))),
+        react_1.default.createElement("div", { className: 'blank-bottom' })));
 };
 exports["default"] = Today;
 
@@ -4629,34 +4594,15 @@ exports["default"] = Today;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const React = __importStar(__webpack_require__(294));
-const ReactDOM = __importStar(__webpack_require__(935));
+const react_1 = __importDefault(__webpack_require__(294));
+const react_dom_1 = __importDefault(__webpack_require__(935));
 __webpack_require__(279);
 const app_1 = __importDefault(__webpack_require__(632));
-ReactDOM.render(React.createElement(app_1.default, null), document.querySelector('#root'));
+react_dom_1.default.render(react_1.default.createElement(app_1.default, null), document.querySelector('#root'));
 
 
 /***/ })

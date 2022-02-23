@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom'
 
 require('./styles.css')
 import App from './app';
