@@ -217,7 +217,7 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
-                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 300)
+                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 500)
                         )
                     })
             })
@@ -393,7 +393,7 @@ const App: React.FC = () => {
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
                             setTimeout(function() {
-                                document.getElementById('overlay').style.display='none'; button.innerText = 'Done.';} , 300)
+                                document.getElementById('overlay').style.display='none'; button.innerText = 'Done.';} , 500)
                         )
                     })
                 })
