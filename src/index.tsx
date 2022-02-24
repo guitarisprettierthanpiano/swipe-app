@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 
 require('./styles.css')
-import App from './app';
+import ROUTER from './ROUTER'
 
 ReactDOM.render(
-    <App />,
+    <ROUTER />,
     document.querySelector('#root')
 );

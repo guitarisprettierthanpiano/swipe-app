@@ -3631,6 +3631,70 @@ if (true) {
 
 /***/ }),
 
+/***/ 560:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const react_1 = __importDefault(__webpack_require__(294));
+const Overlay = () => {
+    return (react_1.default.createElement("div", { id: "overlay" },
+        react_1.default.createElement("h1", null, "Searching..."),
+        react_1.default.createElement("div", { className: "lds-ripple" },
+            react_1.default.createElement("div", null),
+            react_1.default.createElement("div", null))));
+};
+exports["default"] = Overlay;
+
+
+/***/ }),
+
+/***/ 160:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const react_1 = __importDefault(__webpack_require__(294));
+const Overlay_1 = __importDefault(__webpack_require__(560));
+const App = react_1.default.lazy(() => Promise.resolve().then(() => __importStar(__webpack_require__(632))));
+const ROUTER = () => {
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(Overlay_1.default, null),
+        react_1.default.createElement(react_1.default.Suspense, { fallback: react_1.default.createElement("p", { className: 'loading' }, "Loading page...") },
+            react_1.default.createElement(App, null))));
+};
+exports["default"] = ROUTER;
+
+
+/***/ }),
+
 /***/ 632:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3709,6 +3773,7 @@ const App = () => {
     const [dailyIcon, setDailyIcon] = (0, react_1.useState)([]);
     const APIkey = "4ac53b87c2233ee8de919d51d83a4347";
     async function ApiSearchByName() {
+        document.getElementById('overlay').style.display = 'grid';
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
             .then(res => res.json())
             .then(res => {
@@ -3848,7 +3913,8 @@ const App = () => {
                     setDailyDay(daily_day_of_week_array),
                     setDailyDate(daily_date_array),
                     setDailyDescription(daily_description_array),
-                    setDailyIcon(daily_icon_array));
+                    setDailyIcon(daily_icon_array),
+                    setTimeout(function () { document.getElementById('overlay').style.display = 'none'; }, 300));
             });
         });
     }
@@ -3859,6 +3925,7 @@ const App = () => {
         maximumAge: 0
     };
     async function GeolocationSuccess(pos) {
+        document.getElementById('overlay').style.display = 'grid';
         const crd = pos.coords;
         const lati = crd.latitude;
         const longi = crd.longitude;
@@ -3997,7 +4064,10 @@ const App = () => {
                         setDailyDate(daily_date_array),
                         setDailyDescription(daily_description_array),
                         setDailyIcon(daily_icon_array),
-                        button.innerText = 'Done.');
+                        setTimeout(function () {
+                            document.getElementById('overlay').style.display = 'none';
+                            button.innerText = 'Done.';
+                        }, 300));
                 });
             });
         });
@@ -4011,7 +4081,7 @@ const App = () => {
         button.disabled = true;
         button.innerText = 'Searching...';
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options);
-        button.innerText = 'Done.';
+        // button.innerText = 'Done.'
     }
     //only fetch api if enter key is pressed.
     const SearchCity = event => {
@@ -4021,7 +4091,7 @@ const App = () => {
     };
     //fetches something on page load, so page doesn't look barren. washington dc is the default for now i think.
     (0, react_1.useEffect)(() => {
-        // ApiSearchByName();
+        ApiSearchByName();
     }, []);
     return (react_1.default.createElement("div", { className: 'page-container', style: {
             backgroundImage: `url(${backgroundImg})`
@@ -4601,8 +4671,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const react_1 = __importDefault(__webpack_require__(294));
 const react_dom_1 = __importDefault(__webpack_require__(935));
 __webpack_require__(279);
-const app_1 = __importDefault(__webpack_require__(632));
-react_dom_1.default.render(react_1.default.createElement(app_1.default, null), document.querySelector('#root'));
+const ROUTER_1 = __importDefault(__webpack_require__(160));
+react_dom_1.default.render(react_1.default.createElement(ROUTER_1.default, null), document.querySelector('#root'));
 
 
 /***/ })

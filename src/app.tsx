@@ -56,6 +56,8 @@ const App: React.FC = () => {
     const APIkey = process.env.REACT_APP_API_KEY
 
     async function ApiSearchByName(){
+        document.getElementById('overlay').style.display='grid'
+
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
             .then(res => res.json())
             .then(res => {
@@ -214,7 +216,8 @@ const App: React.FC = () => {
                             setDailyDay(daily_day_of_week_array),
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
-                            setDailyIcon(daily_icon_array)
+                            setDailyIcon(daily_icon_array),
+                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 300)
                         )
                     })
             })
@@ -228,6 +231,7 @@ const App: React.FC = () => {
     };
     
     async function GeolocationSuccess(pos) {
+        document.getElementById('overlay').style.display='grid'
         const crd = pos.coords;
 
         const lati: number = crd.latitude
@@ -388,8 +392,8 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
-
-                            button.innerText = 'Done.'
+                            setTimeout(function() {
+                                document.getElementById('overlay').style.display='none'; button.innerText = 'Done.';} , 300)
                         )
                     })
                 })
@@ -408,7 +412,7 @@ const App: React.FC = () => {
 
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options)
 
-        button.innerText = 'Done.'
+        // button.innerText = 'Done.'
     }
 
     //only fetch api if enter key is pressed.
@@ -420,7 +424,7 @@ const App: React.FC = () => {
 
     //fetches something on page load, so page doesn't look barren. washington dc is the default for now i think.
     useEffect(() => {
-        // ApiSearchByName();
+        ApiSearchByName();
     }, [])
 
     return(
