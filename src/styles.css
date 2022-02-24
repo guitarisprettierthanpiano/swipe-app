@@ -131,9 +131,16 @@ button[disabled]:hover{
     grid-column: 1 / span 2;
     min-height: 48px;
 
+    width: auto;
+
     font-size: 40px;
     text-align: center;
     text-shadow: 2px 1px rgba(0, 0, 0, 0.8);
+
+    background-color: rgba(0, 9, 32, 0.9);
+    border-radius: 0px 20px 0px 20px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 #time{
     grid-row: 3;
@@ -141,9 +148,18 @@ button[disabled]:hover{
 
     text-align: center;
     font-size: 14px;
-    padding-bottom: 14px;
+    margin-bottom: 12px;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
 
     color: rgb(240, 240, 240);
+
+    background-color: rgba(0, 9, 32, 0.9);
+    border-radius: 0px 0px 6px 6px;
+
+    width: auto;
+    height: auto;
 }
 
 .today-data{

@@ -4021,7 +4021,7 @@ const App = () => {
     };
     //fetches something on page load, so page doesn't look barren. washington dc is the default for now i think.
     (0, react_1.useEffect)(() => {
-        ApiSearchByName();
+        // ApiSearchByName();
     }, []);
     return (react_1.default.createElement("div", { className: 'page-container', style: {
             backgroundImage: `url(${backgroundImg})`

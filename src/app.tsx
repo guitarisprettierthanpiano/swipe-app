@@ -420,7 +420,7 @@ const App: React.FC = () => {
 
     //fetches something on page load, so page doesn't look barren. washington dc is the default for now i think.
     useEffect(() => {
-        ApiSearchByName();
+        // ApiSearchByName();
     }, [])
 
     return(
