@@ -27,6 +27,18 @@
 
     /* animation: fade 2s ease-in; */
 }
+
+/* overriding some toastify css */
+.Toastify__toast--error {
+    background: rgb(219, 0, 0)!important;
+}
+.Toastify__toast-container--top-center {
+    top: 40%!important;
+}
+.Toastify__close-button{
+    display: none!important;
+}
+
 #overlay{
     background-color: rgb(1, 10, 32);
 

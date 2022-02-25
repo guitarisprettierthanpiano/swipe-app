@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, HashRouter } from 'react-router-dom';
+import { toast, Flip } from 'react-toastify';
 
 import Nav from './components/nav'
 import Daily from './components/daily'
@@ -218,26 +219,38 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
-                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 1000)
+                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 1300)
                         )
                     })
             })
         }catch(error){
-            alert(error)
-            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 500)
+            setTimeout(function() {
+                document.getElementById('overlay').style.display='none';
+                toast.error(`${error}`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                transition: Flip,
+                theme: 'colored',
+                });
+            }, 800)
             return
         }
     }
 
     //not really sure on the ideal timeout. but i'm only allowing once per page load so it is higher than the default 5000.
-    const geolocation_options = {
+    const geolocation_options: Object = {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 0
     };
     
     async function GeolocationSuccess(pos) {
-        document.getElementById('overlay').style.display='grid'
+        try{
         const crd = pos.coords;
 
         const lati: number = crd.latitude
@@ -403,7 +416,25 @@ const App: React.FC = () => {
                         )
                     })
                 })
-            })
+            })}
+        catch(error){
+            setTimeout(function() {
+                document.getElementById('overlay').style.display='none';
+                
+                toast.error(`${error}`, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                transition: Flip,
+                theme: 'colored',
+                });
+            }, 800)
+            return
+        }
     }
 
     function GeolocationError(err) {
@@ -415,6 +446,7 @@ const App: React.FC = () => {
         const button = document.querySelector('button')
         button.disabled = true
         button.innerText = 'Searching...'
+        document.getElementById('overlay').style.display='grid'
 
         navigator.geolocation.getCurrentPosition(GeolocationSuccess, GeolocationError, geolocation_options)
 
