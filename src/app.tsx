@@ -58,6 +58,7 @@ const App: React.FC = () => {
     async function ApiSearchByName(){
         document.getElementById('overlay').style.display='grid'
 
+        try{
         const FetchCoords = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`)
             .then(res => res.json())
             .then(res => {
@@ -217,10 +218,15 @@ const App: React.FC = () => {
                             setDailyDate(daily_date_array),
                             setDailyDescription(daily_description_array),
                             setDailyIcon(daily_icon_array),
-                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 500)
+                            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 1000)
                         )
                     })
             })
+        }catch(error){
+            alert(error)
+            setTimeout(function() {document.getElementById('overlay').style.display='none'}, 500)
+            return
+        }
     }
 
     //not really sure on the ideal timeout. but i'm only allowing once per page load so it is higher than the default 5000.
