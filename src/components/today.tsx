@@ -36,7 +36,7 @@ const Today: React.FC<Props> = (props) => {
 
     <div className='today-data'>
         <div className='today-west'>
-            <img id='weather-img' src={`${props.icon}`}></img>
+            <img id='weather-img' src={`${props.icon}`} alt='weather-icon-today'></img>
             <span id='overcast'>
                 {props.description}
             </span>

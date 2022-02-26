@@ -54,9 +54,9 @@ const App: React.FC = () => {
     const [dailyDescription, setDailyDescription] = useState<Array<8>>([])
     const [dailyIcon, setDailyIcon] = useState<Array<8>>([]) 
 
-    const APIkey = process.env.REACT_APP_API_KEY
+    const APIkey: string = process.env.REACT_APP_API_KEY
 
-    async function ApiSearchByName(){
+    async function ApiSearchByName(): Promise<void>{
         document.getElementById('overlay').style.display='grid'
 
         try{
@@ -190,7 +190,7 @@ const App: React.FC = () => {
                           }
 
                         //this variable will change the time to the local location's time. uses milliseconds.
-                        const timezone_calc = (18000000 + result.timezone_offset * 1000)
+                        const timezone_calc:number = (18000000 + result.timezone_offset * 1000)
 
                         return (
                             setSearchedCity(res.name),
@@ -249,7 +249,7 @@ const App: React.FC = () => {
         maximumAge: 0
     };
     
-    async function GeolocationSuccess(pos) {
+    async function GeolocationSuccess(pos):Promise<void> {
         try{
         const crd = pos.coords;
 
@@ -381,9 +381,9 @@ const App: React.FC = () => {
                         }
 
                         //this variable will change the time to the local location's time. uses milliseconds
-                        const timezone_calc = (18000000 + result.timezone_offset * 1000)
+                        const timezone_calc:number = (18000000 + result.timezone_offset * 1000)
                         
-                        const button = document.querySelector('button')
+                        const button: HTMLButtonElement = document.querySelector('button')
                         return(
                             setSearchedCity(your_location),
                             setTimezoneOffset(timezone_calc),
@@ -432,7 +432,7 @@ const App: React.FC = () => {
                 transition: Flip,
                 theme: 'colored',
                 });
-            }, 800)
+            }, 1000)
             return
         }
     }
