@@ -5812,9 +5812,9 @@ const App = () => {
         catch (error) {
             setTimeout(function () {
                 document.getElementById('overlay').style.display = 'none';
-                react_toastify_1.toast.error(`${error}`, {
+                react_toastify_1.toast.error(`Cannot find ${cityName}.`, {
                     position: 'top-center',
-                    autoClose: 3000,
+                    autoClose: 3100,
                     hideProgressBar: true,
                     closeOnClick: false,
                     pauseOnHover: true,

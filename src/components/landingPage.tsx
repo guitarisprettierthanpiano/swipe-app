@@ -45,7 +45,9 @@ const App: React.FC = () => {
   const [hourlyTemps, setHourlyTemps] = React.useState<Array<24>>([]);
   const [hourlyHours, setHourlyHours] = React.useState<Array<24>>([]);
   const [hourlyFeels, setHourlyFeels] = React.useState<Array<24>>([]);
-  const [hourlyDescription, setHourlyDescription] = React.useState<Array<24>>([]);
+  const [hourlyDescription, setHourlyDescription] = React.useState<Array<24>>(
+    []
+  );
   const [hourlyIcon, setHourlyIcon] = React.useState<Array<24>>([]);
 
   //props sent to Daily component
@@ -246,9 +248,9 @@ const App: React.FC = () => {
     } catch (error) {
       setTimeout(function () {
         document.getElementById('overlay').style.display = 'none';
-        toast.error(`${error}`, {
+        toast.error(`Cannot find ${cityName}.`, {
           position: 'top-center',
-          autoClose: 3000,
+          autoClose: 3100,
           hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
