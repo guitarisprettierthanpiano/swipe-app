@@ -6033,7 +6033,7 @@ const App = () => {
         ApiSearchByName();
     }, []);
     return (react_1.default.createElement("div", { className: "page-container", style: {
-            backgroundImage: `url(${backgroundImg})`,
+            background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
         } },
         react_1.default.createElement("div", { className: "top-container" },
             react_1.default.createElement("input", { placeholder: "Search...", id: "input-box", autoFocus: true, type: "text", onChange: (event) => setCityName(event.target.value), value: cityName, onKeyPress: SearchCity }),

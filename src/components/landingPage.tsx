@@ -523,8 +523,9 @@ const App: React.FC = () => {
   return (
     <div
       className="page-container"
+
       style={{
-        backgroundImage: `url(${backgroundImg})`,
+        background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
       }}
     >
       <div className="top-container">

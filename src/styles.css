@@ -120,6 +120,9 @@
   height: 100%;
   width: 100%;
 
+  /* mix-blend-mode: multiply;
+  background-color: #035581; */
+
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -208,14 +211,15 @@ button[disabled]:hover {
   grid-row: 2;
   grid-column: 1 / span 2;
   min-height: 48px;
+  font-weight: 700;
 
   width: auto;
 
-  font-size: 40px;
+  font-size: 44px;
   text-align: center;
   text-shadow: 2px 1px rgba(0, 0, 0, 0.8);
 
-  background-color: rgb(0, 9, 32);
+  /* background-color: rgb(0, 9, 32); */
   border-radius: 0px 20px 0px 20px;
   padding-left: 16px;
   padding-right: 16px;
@@ -234,7 +238,7 @@ button[disabled]:hover {
 
   color: rgb(240, 240, 240);
 
-  background-color: rgba(0, 9, 32, 0.55);
+  /* background-color: rgba(0, 9, 32, 0.55); */
   border-radius: 0px 6px 0px 6px;
 
   width: auto;
@@ -642,6 +646,18 @@ a {
   }
 }
 
+@media screen and (max-width: 540px) {
+  .today-data{
+    grid-template-columns: 1fr;
+  }
+  .today-west{
+    display: none;
+  }
+  .today-east{
+    grid-column: 1;
+  }
+}
+
 /*mobile phone size*/
 @media screen and (max-width: 426px) {
   * {
@@ -672,6 +688,10 @@ a {
   .blank-top,
   .blank-bottom {
     display: none;
+  }
+
+  #current-weather{
+    font-size: 34px;
   }
   .today-right {
     display: none;
