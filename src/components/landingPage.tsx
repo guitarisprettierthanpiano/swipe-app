@@ -21,6 +21,7 @@ import rainN from './img/rainD.webp';
 import snowD from './img/snowD.webp';
 import snowN from './img/snowN.webp';
 import thunderstorm from './img/thunderstorm.webp';
+import RecentSearches from './recentSearches';
 
 const App: React.FC = () => {
   //states used by input box
@@ -58,6 +59,8 @@ const App: React.FC = () => {
   const [dailyDescription, setDailyDescription] = React.useState<Array<8>>([]);
   const [dailyIcon, setDailyIcon] = React.useState<Array<8>>([]);
 
+  //props sent to the recent searches
+  const [counter, setCounter] = React.useState<number>(0);
   const APIkey: string = process.env.REACT_APP_API_KEY;
 
   async function ApiSearchByName(): Promise<void> {
@@ -212,6 +215,29 @@ const App: React.FC = () => {
               //this variable will change the time to the local location's time. uses milliseconds.
               const timezone_calc: number =
                 18000000 + result.timezone_offset * 1000;
+
+              //posting data to my postgresql server
+              const ClickedSubmit = async () => {
+                // e.preventDefault();
+                const searchedTerm = res.name;
+                const body = { searchedTerm };
+                try {
+                  const response = await fetch(
+                    'https://stevens-postgresql-backend.herokuapp.com/recent',
+                    {
+                      method: 'POST',
+                      headers: {
+                        'Content-type': 'application/json',
+                      },
+                      body: JSON.stringify(body),
+                    }
+                  );
+                  const parseResponse = await response.json();
+                } catch (error) {}
+              };
+              ClickedSubmit();
+
+              setCounter(counter + 2);
 
               return (
                 setSearchedCity(res.name),
@@ -434,6 +460,30 @@ const App: React.FC = () => {
 
                   const button: HTMLButtonElement =
                     document.querySelector('button');
+
+                  //posting data to my postgresql server
+                  const ClickedSubmit = async () => {
+                    // e.preventDefault();
+                    const searchedTerm = res.name;
+                    const body = { searchedTerm };
+                    try {
+                      const response = await fetch(
+                        'https://stevens-postgresql-backend.herokuapp.com/recent',
+                        {
+                          method: 'POST',
+                          headers: {
+                            'Content-type': 'application/json',
+                          },
+                          body: JSON.stringify(body),
+                        }
+                      );
+                      const parseResponse = await response.json();
+                    } catch (error) {}
+                  };
+                  ClickedSubmit();
+
+                  setCounter(counter + 2);
+
                   return (
                     setSearchedCity(your_location),
                     setTimezoneOffset(timezone_calc),
@@ -521,91 +571,93 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className="page-container"
+    <>
+      <RecentSearches counterPassed={counter} />
+      <div
+        className="page-container"
+        style={{
+          background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
+        }}
+      >
+        <div className="top-container">
+          <input
+            placeholder="Search..."
+            id="input-box"
+            autoFocus
+            type="text"
+            onChange={(event) => setCityName(event.target.value)}
+            value={cityName}
+            onKeyPress={SearchCity}
+          />
 
-      style={{
-        background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
-      }}
-    >
-      <div className="top-container">
-        <input
-          placeholder="Search..."
-          id="input-box"
-          autoFocus
-          type="text"
-          onChange={(event) => setCityName(event.target.value)}
-          value={cityName}
-          onKeyPress={SearchCity}
-        />
-
-        <div className="my-location">
-          <button id="find-me" onClick={() => ClickedMyLocation()}>
-            My Location
-          </button>
-          <br />
-          <p id="status"></p>
-          <a id="map-link" target="_blank"></a>
-        </div>
-      </div>
-
-      <div className="middle-container">
-        <Today
-          temperature={temp}
-          temp_feels_like={feelsLike}
-          description={description}
-          humidity={humidity}
-          wind_speed={windSpeed}
-          wind_degrees={windDeg}
-          wind_gust={windGust}
-          icon={todayIcon}
-          location={searchedCity}
-          background_image={backgroundImg}
-          timezone_offset={timezoneOffset}
-        />
-      </div>
-
-      <HashRouter>
-        <div className="bottom-container">
-          <Nav />
-
-          <div className="switch-container">
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <Hourly
-                    {...props}
-                    hourly_temps={hourlyTemps}
-                    hourly_hours={hourlyHours}
-                    hourly_feels={hourlyFeels}
-                    hourly_description={hourlyDescription}
-                    hourly_icon={hourlyIcon}
-                  />
-                )}
-              />
-
-              <Route
-                path="/daily"
-                render={(props) => (
-                  <Daily
-                    {...props}
-                    daily_max={dailyMax}
-                    daily_min={dailyMin}
-                    daily_day={dailyDay}
-                    daily_date={dailyDate}
-                    daily_description={dailyDescription}
-                    daily_icon={dailyIcon}
-                  />
-                )}
-                //component = {Daily}
-              />
-            </Switch>
+          <div className="my-location">
+            <button id="find-me" onClick={() => ClickedMyLocation()}>
+              My Location
+            </button>
+            <br />
+            <p id="status"></p>
+            <a id="map-link" target="_blank"></a>
           </div>
         </div>
-      </HashRouter>
-    </div>
+
+        <div className="middle-container">
+          <Today
+            temperature={temp}
+            temp_feels_like={feelsLike}
+            description={description}
+            humidity={humidity}
+            wind_speed={windSpeed}
+            wind_degrees={windDeg}
+            wind_gust={windGust}
+            icon={todayIcon}
+            location={searchedCity}
+            background_image={backgroundImg}
+            timezone_offset={timezoneOffset}
+          />
+        </div>
+
+        <HashRouter>
+          <div className="bottom-container">
+            <Nav />
+
+            <div className="switch-container">
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => (
+                    <Hourly
+                      {...props}
+                      hourly_temps={hourlyTemps}
+                      hourly_hours={hourlyHours}
+                      hourly_feels={hourlyFeels}
+                      hourly_description={hourlyDescription}
+                      hourly_icon={hourlyIcon}
+                    />
+                  )}
+                />
+
+                <Route
+                  path="/daily"
+                  render={(props) => (
+                    <Daily
+                      {...props}
+                      daily_max={dailyMax}
+                      daily_min={dailyMin}
+                      daily_day={dailyDay}
+                      daily_date={dailyDate}
+                      daily_description={dailyDescription}
+                      daily_icon={dailyIcon}
+                    />
+                  )}
+                  //component = {Daily}
+                />
+              </Switch>
+            </div>
+          </div>
+        </HashRouter>
+      </div>
+    </>
   );
 };
 

@@ -288,6 +288,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 400:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 279:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -5630,6 +5640,7 @@ const rainD_webp_2 = __importDefault(__webpack_require__(345));
 const snowD_webp_1 = __importDefault(__webpack_require__(387));
 const snowN_webp_1 = __importDefault(__webpack_require__(265));
 const thunderstorm_webp_1 = __importDefault(__webpack_require__(221));
+const recentSearches_1 = __importDefault(__webpack_require__(333));
 const App = () => {
     //states used by input box
     const [cityName, setCityName] = react_1.default.useState('Washington DC');
@@ -5658,6 +5669,8 @@ const App = () => {
     const [dailyDate, setDailyDate] = react_1.default.useState([]);
     const [dailyDescription, setDailyDescription] = react_1.default.useState([]);
     const [dailyIcon, setDailyIcon] = react_1.default.useState([]);
+    //props sent to the recent searches
+    const [counter, setCounter] = react_1.default.useState(0);
     const APIkey = "4ac53b87c2233ee8de919d51d83a4347";
     async function ApiSearchByName() {
         document.getElementById('overlay').style.display = 'grid';
@@ -5780,6 +5793,25 @@ const App = () => {
                     }
                     //this variable will change the time to the local location's time. uses milliseconds.
                     const timezone_calc = 18000000 + result.timezone_offset * 1000;
+                    //posting data to my postgresql server
+                    const ClickedSubmit = async () => {
+                        // e.preventDefault();
+                        const searchedTerm = res.name;
+                        const body = { searchedTerm };
+                        try {
+                            const response = await fetch('https://stevens-postgresql-backend.herokuapp.com/recent', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-type': 'application/json',
+                                },
+                                body: JSON.stringify(body),
+                            });
+                            const parseResponse = await response.json();
+                        }
+                        catch (error) { }
+                    };
+                    ClickedSubmit();
+                    setCounter(counter + 2);
                     return (setSearchedCity(res.name),
                         setTimezoneOffset(timezone_calc),
                         setCityName(''),
@@ -5961,6 +5993,25 @@ const App = () => {
                         //this variable will change the time to the local location's time. uses milliseconds
                         const timezone_calc = 18000000 + result.timezone_offset * 1000;
                         const button = document.querySelector('button');
+                        //posting data to my postgresql server
+                        const ClickedSubmit = async () => {
+                            // e.preventDefault();
+                            const searchedTerm = res.name;
+                            const body = { searchedTerm };
+                            try {
+                                const response = await fetch('https://stevens-postgresql-backend.herokuapp.com/recent', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-type': 'application/json',
+                                    },
+                                    body: JSON.stringify(body),
+                                });
+                                const parseResponse = await response.json();
+                            }
+                            catch (error) { }
+                        };
+                        ClickedSubmit();
+                        setCounter(counter + 2);
                         return (setSearchedCity(your_location),
                             setTimezoneOffset(timezone_calc),
                             setCityName(''),
@@ -6032,25 +6083,27 @@ const App = () => {
     react_1.default.useEffect(() => {
         ApiSearchByName();
     }, []);
-    return (react_1.default.createElement("div", { className: "page-container", style: {
-            background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
-        } },
-        react_1.default.createElement("div", { className: "top-container" },
-            react_1.default.createElement("input", { placeholder: "Search...", id: "input-box", autoFocus: true, type: "text", onChange: (event) => setCityName(event.target.value), value: cityName, onKeyPress: SearchCity }),
-            react_1.default.createElement("div", { className: "my-location" },
-                react_1.default.createElement("button", { id: "find-me", onClick: () => ClickedMyLocation() }, "My Location"),
-                react_1.default.createElement("br", null),
-                react_1.default.createElement("p", { id: "status" }),
-                react_1.default.createElement("a", { id: "map-link", target: "_blank" }))),
-        react_1.default.createElement("div", { className: "middle-container" },
-            react_1.default.createElement(today_1.default, { temperature: temp, temp_feels_like: feelsLike, description: description, humidity: humidity, wind_speed: windSpeed, wind_degrees: windDeg, wind_gust: windGust, icon: todayIcon, location: searchedCity, background_image: backgroundImg, timezone_offset: timezoneOffset })),
-        react_1.default.createElement(react_router_dom_1.HashRouter, null,
-            react_1.default.createElement("div", { className: "bottom-container" },
-                react_1.default.createElement(nav_1.default, null),
-                react_1.default.createElement("div", { className: "switch-container" },
-                    react_1.default.createElement(react_router_dom_1.Switch, null,
-                        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/", render: (props) => (react_1.default.createElement(hourly_1.default, { ...props, hourly_temps: hourlyTemps, hourly_hours: hourlyHours, hourly_feels: hourlyFeels, hourly_description: hourlyDescription, hourly_icon: hourlyIcon })) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/daily", render: (props) => (react_1.default.createElement(daily_1.default, { ...props, daily_max: dailyMax, daily_min: dailyMin, daily_day: dailyDay, daily_date: dailyDate, daily_description: dailyDescription, daily_icon: dailyIcon })) })))))));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(recentSearches_1.default, { counterPassed: counter }),
+        react_1.default.createElement("div", { className: "page-container", style: {
+                background: `linear-gradient( rgba(0, 0, 0, .55), rgba(0, 0, 0, .55 )), url(${backgroundImg})`,
+            } },
+            react_1.default.createElement("div", { className: "top-container" },
+                react_1.default.createElement("input", { placeholder: "Search...", id: "input-box", autoFocus: true, type: "text", onChange: (event) => setCityName(event.target.value), value: cityName, onKeyPress: SearchCity }),
+                react_1.default.createElement("div", { className: "my-location" },
+                    react_1.default.createElement("button", { id: "find-me", onClick: () => ClickedMyLocation() }, "My Location"),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("p", { id: "status" }),
+                    react_1.default.createElement("a", { id: "map-link", target: "_blank" }))),
+            react_1.default.createElement("div", { className: "middle-container" },
+                react_1.default.createElement(today_1.default, { temperature: temp, temp_feels_like: feelsLike, description: description, humidity: humidity, wind_speed: windSpeed, wind_degrees: windDeg, wind_gust: windGust, icon: todayIcon, location: searchedCity, background_image: backgroundImg, timezone_offset: timezoneOffset })),
+            react_1.default.createElement(react_router_dom_1.HashRouter, null,
+                react_1.default.createElement("div", { className: "bottom-container" },
+                    react_1.default.createElement(nav_1.default, null),
+                    react_1.default.createElement("div", { className: "switch-container" },
+                        react_1.default.createElement(react_router_dom_1.Switch, null,
+                            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/", render: (props) => (react_1.default.createElement(hourly_1.default, { ...props, hourly_temps: hourlyTemps, hourly_hours: hourlyHours, hourly_feels: hourlyFeels, hourly_description: hourlyDescription, hourly_icon: hourlyIcon })) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/daily", render: (props) => (react_1.default.createElement(daily_1.default, { ...props, daily_max: dailyMax, daily_min: dailyMin, daily_day: dailyDay, daily_date: dailyDate, daily_description: dailyDescription, daily_icon: dailyIcon })) }))))))));
 };
 exports["default"] = App;
 
@@ -6107,6 +6160,66 @@ exports["default"] = Nav;
 
 /***/ }),
 
+/***/ 333:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const react_1 = __importDefault(__webpack_require__(294));
+__webpack_require__(400);
+const recentSearches = (props) => {
+    const [searchesArray, setSearchesArray] = react_1.default.useState([]);
+    const [timeArray, setTimeArray] = react_1.default.useState([]);
+    const ClickedGet = async () => {
+        try {
+            const response = await fetch('https://stevens-postgresql-backend.herokuapp.com/recent', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                // body: JSON.stringify(body),
+            });
+            const parseResponse = await response.json();
+            // console.log(`PARSED RESP IS ${parseResponse[0].search_term}`);
+            let searchArray = [];
+            let timeArray = [];
+            for (let i = 0; i < 10; i++) {
+                searchArray.push(parseResponse[i].search_term);
+                timeArray.push(parseResponse[i].exact_time);
+            }
+            setTimeArray(() => timeArray);
+            setSearchesArray(() => searchArray);
+        }
+        catch (error) { }
+    };
+    react_1.default.useEffect(() => {
+        ClickedGet();
+    }, []);
+    react_1.default.useEffect(() => {
+        ClickedGet();
+    }, [props.counterPassed]);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("div", { className: "dropdown" },
+            react_1.default.createElement("a", { href: "javascript:void(0)", className: "dropbtn", onClick: () => ClickedGet() }, "Recent Searches"),
+            react_1.default.createElement("div", { className: "dropdown-content" }, searchesArray.map((x, i) => (react_1.default.createElement("h1", { key: i },
+                new Intl.DateTimeFormat('en-US', {
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                }).format(timeArray[i]),
+                "\u2002 \u2002",
+                x)))))));
+};
+exports["default"] = recentSearches;
+
+
+/***/ }),
+
 /***/ 273:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -6125,7 +6238,8 @@ const Today = (props) => {
         react_1.default.createElement("span", { id: "time" }, Intl.DateTimeFormat('en-US', {
             hour: 'numeric',
             minute: '2-digit',
-        }).format(Date.now() + props.timezone_offset)),
+            // }).format(Date.now() + props.timezone_offset NO DST)}
+        }).format(Date.now() + props.timezone_offset - 3600000)),
         react_1.default.createElement("div", { className: "today-data" },
             react_1.default.createElement("div", { className: "today-west" },
                 react_1.default.createElement("img", { id: "weather-img", src: `${props.icon}`, alt: "weather-icon-today" }),

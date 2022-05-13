@@ -28,7 +28,8 @@ const Today: React.FC<Props> = (props) => {
         {Intl.DateTimeFormat('en-US', {
           hour: 'numeric',
           minute: '2-digit',
-        }).format(Date.now() + props.timezone_offset)}
+        // }).format(Date.now() + props.timezone_offset NO DST)}
+        }).format(Date.now() + props.timezone_offset - 3600000)}
       </span>
 
       <div className="today-data">
