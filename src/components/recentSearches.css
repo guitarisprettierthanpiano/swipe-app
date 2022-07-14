@@ -16,6 +16,7 @@
   background-color: rgba(0, 3, 16, 1);
   border-radius: 0 10px 0 10px;
   outline: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: default;
 }
 .dropdown-content {
   display: none;
@@ -51,7 +52,12 @@
   background-color: rgba(0, 9, 32, 0.95);
 } */
 
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
+  display: grid;
+  grid-template-columns: 1fr;
+} */
+
+.dropbtn:hover + .dropdown-content {
   display: grid;
   grid-template-columns: 1fr;
 }

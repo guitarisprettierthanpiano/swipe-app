@@ -158,6 +158,7 @@ input {
   text-align: center;
 
   border: none;
+  z-index: 6;
 }
 .my-location {
   grid-row: 2;
@@ -168,6 +169,7 @@ input {
   min-width: 110px;
 
   padding-top: 4px;
+  z-index: 6;
 }
 button {
   cursor: pointer;
@@ -191,6 +193,9 @@ button[disabled] {
 }
 button[disabled]:hover {
   text-decoration: none;
+}
+#map-link{
+  outline: none
 }
 
 /* MIDDLE CONTAINER  */
